@@ -1,0 +1,13 @@
+Package: iMoMo
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Andres Villegas <andresmauriciovillegas@gmail.com>
+Maintainer: Andres Villegas <andresmauriciovillegas@gmail.com>
+Description: More about what it does (maybe more than one line)
+Depends:
+    R (>= 3.2.0),
+    StMoMo (>= 0.3.1),
+License: What license is it under?
+LazyData: TRUE
+RoxygenNote: 5.0.1
