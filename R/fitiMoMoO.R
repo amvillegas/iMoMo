@@ -34,6 +34,6 @@ fit.iMoMoO <- function(object, Dxt, Ext, ages = 1:nrow(Dxt),
   out$Ext <- Ext[which(ages %in% ages.fit),
                  which(years %in% years.fit)]
   class(out$model) <- class(object)
-  class(out) <- c("fitiMoMoO", "fitiMoMo", class(out))
+  class(out) <- c("fitiMoMoO", "fitiMoMo", "fitStMoMo")
   out
 }

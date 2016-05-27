@@ -9,6 +9,7 @@ out <- bootstrap(object$fittingModel, nBoot = nBoot, type = type,
                  deathType = deathType)
 
 out$model <- object
+out$bootParameters <- lapply(out$bootParameters, transParamiMoMoO)
 class(out) <- c("bootiMoMoO", "bootiMoMo", class(out))
 out
 }
@@ -25,6 +26,7 @@ bootstrap.fitiMoMoF <- function(object, nBoot = 1,
                    deathType = deathType)
 
   out$model <- object
+  out$bootParameters <- lapply(out$bootParameters, transParamiMoMoF)
   class(out) <- c("bootiMoMoF", "bootiMoMo", class(out))
   out
 }

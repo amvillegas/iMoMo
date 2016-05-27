@@ -46,6 +46,6 @@ fit.iMoMoF <- function(object, Dxt, Ext, ages = 1:nrow(Dxt),
 #   if(!is.null(out$gc)) out$gc <- out$gc * -1
   out <- transParamiMoMoF(out)
   class(out$model) <- class(object)
-  class(out) <- c("fitiMoMoF", "fitiMoMo", class(out))
+  class(out) <- c("fitiMoMoF", "fitiMoMo", "fitStMoMo")
   out
 }
