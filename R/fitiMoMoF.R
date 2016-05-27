@@ -19,27 +19,33 @@ fit.iMoMoF <- function(object, Dxt, Ext, ages = 1:nrow(Dxt),
              ...)
   out$fittingModel <- out
   #Transform the parameters
-  out$years <- out$years[2:length(out$years)]
-  out$cohorts <- out$cohorts[2:length(out$cohorts)]
-  if (object$N > 0) {
-    for (i in 1:object$N) {
-      ci <- out$kt[i, 1]
-      out$kt[i, ] <- out$kt[i, ] - ci
-      out$kt[i, ] <- c(0, diff(out$kt[i, ]))
-      out$ax <- out$ax + ci * out$bx[, i]
-
-    }
-    out$kt <- matrix(out$kt[,-1], nrow = object$N, ncol = length(out$years),
-                     dimnames = list(1:object$N, out$years))
-  }
-
-  if (!is.null(out$gc)) {
-      c0 <- out$gc[1]
-      out$gc <- out$gc - c0
-      out$ax <- out$ax + c0 * out$b0x
-      out$gc <- diff(out$gc)
-  }
+#   out$years <- out$years[2:length(out$years)]
+#   out$cohorts <- out$cohorts[2:length(out$cohorts)]
+#   if (object$N > 0) {
+#     for (i in 1:object$N) {
+#       ci <- out$kt[i, 1]
+#       out$kt[i, ] <- out$kt[i, ] - ci
+#       out$kt[i, ] <- c(0, diff(out$kt[i, ]))
+#       out$ax <- out$ax + ci * out$bx[, i]
+#
+#     }
+#     out$kt <- matrix(out$kt[,-1], nrow = object$N, ncol = length(out$years),
+#                      dimnames = list(1:object$N, out$years))
+#   }
+#
+#   if (!is.null(out$gc)) {
+#       c0 <- out$gc[1]
+#       out$gc <- out$gc - c0
+#       out$ax <- out$ax + c0 * out$b0x
+#       out$gc <- diff(out$gc)
+#   }
+#   out$Ax <-  out$ax
+#   out$ax <- NULL
+#   out <- c(out, list(ax=NULL))
+#   if(!is.null(out$kt)) out$kt <- out$kt * -1
+#   if(!is.null(out$gc)) out$gc <- out$gc * -1
+  out <- transParamiMoMoF(out)
   class(out$model) <- class(object)
-  class(out) <- c("fitiMoMoF", class(out))
+  class(out) <- c("fitiMoMoF", "fitiMoMo", class(out))
   out
 }

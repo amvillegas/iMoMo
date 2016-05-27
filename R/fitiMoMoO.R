@@ -22,7 +22,18 @@ fit.iMoMoO <- function(object, Dxt, Ext, ages = 1:nrow(Dxt),
            start.ax = start.ax, start.bx = start.bx, start.kt = start.kt,
            start.b0x = start.b0x, start.gc = start.gc, verbose = verbose,
            ...)
+  out$fittingModel <- out
+
+  out <- transParamiMoMoO(out)
+
+#   if(!is.null(out$kt)) out$kt <- out$kt * -1
+#   if(!is.null(out$gc)) out$gc <- out$gc * -1
+#   if(!is.null(out$ax)) out$ax <- out$ax * -1
+  out$Dxt <- Dxt[which(ages %in% ages.fit),
+                 which(years %in% years.fit)]
+  out$Ext <- Ext[which(ages %in% ages.fit),
+                 which(years %in% years.fit)]
   class(out$model) <- class(object)
-  class(out) <- c("fitiMoMoO", class(out))
+  class(out) <- c("fitiMoMoO", "fitiMoMo", class(out))
   out
 }
