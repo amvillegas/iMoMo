@@ -125,7 +125,8 @@ simpleVAR2 <- function(y,p=1,d=0, type = c("const", "trend", "both", "none")){
     }
 
     out<-list(K=K,A=A,C=C,D=D,p=p,d=d,n=n,Sigma=Sigma,
-              resid=resid(fittingModel),fittingModel=fittingModel,y=y,dy=dy,datamat=datamat)
+              resid=resid(fittingModel),fittingModel=fittingModel,
+              y=y,dy=dy,datamat=datamat)
   }else{
     if(type %in% c("const")){ #Random walk with drift
       out<-simpleVAR(y=y,p=p,d=d)
