@@ -1,0 +1,512 @@
+dev.off()
+#kt CBD - AR(1) with trend
+pdf(file.path(figureDir, "CBDf-kt-ARt.pdf"), 6.5*0.8, 5*0.8)
+plot(CBDf_fit$years, CBDf_fit$kt[1, ], xlim = c(1960, 2061), ylim = ylim,
+xlab = "year", main = expression(kappa[t]^"(1)" * "vs t"), ylab = "",
+type = "l")
+fan(t(CBDf_sim_ARt$kt.s$sim[1,,]), start = 2012, probs = probs, n.fan = 4,
+fan.col = colorRampPalette(c("black", "white")), ln = NULL)
+dev.off()
+mxt <- Dxt/Ext
+plotRateFan <- function(years, mxt, xlim, ylim, ratesSim, agesPlot, col){
+probs  <- c(2.5, 10, 25, 50, 75, 90, 97.5)
+par(mar=c(4.5,4,1,1))
+for (i in 1:length(agesPlot)) {
+if ( i == 1){
+plot(years, mxt[agesPlot[i], ], xlim = xlim, ylim = ylim,
+xlab = "year", ylab = "mortality rate (log scale)", pch = 20, log = "y")
+} else {
+points(years, mxt[agesPlot[i], ], pch = 20)
+}
+fan(t(LC_CIf_sim_AR$rates["65", , ]), start = 2012,
+probs = probs, n.fan = 4,
+fan.col = colorRampPalette(c("black", "white")), ln = NULL)
+}
+}
+agesPlot <- c("30", "45", "60", "75")
+xlim <- c(1960, 2061)
+ylim <- c(0.001, 0.002)
+mxt <- Dxt/Ext
+plotRateFan <- function(years, mxt, xlim, ylim, ratesSim, agesPlot, col){
+probs  <- c(2.5, 10, 25, 50, 75, 90, 97.5)
+par(mar=c(4.5,4,1,1))
+for (i in 1:length(agesPlot)) {
+if ( i == 1){
+plot(years, mxt[agesPlot[i], ], xlim = xlim, ylim = ylim,
+xlab = "year", ylab = "mortality rate (log scale)", pch = 20, log = "y")
+} else {
+points(years, mxt[agesPlot[i], ], pch = 20)
+}
+fan(t(ratesSim$rates["65", , ]), start = 2012,
+probs = probs, n.fan = 4,
+fan.col = colorRampPalette(c(col[i], "white")), ln = NULL)
+}
+}
+agesPlot <- c("30", "45", "60", "75")
+xlim <- c(1960, 2061)
+ylim <- c(0.001, 0.002)
+plotRateFan(years = years, xlim = xlim, ylim = ylim, ratesSim = LC_CIf_sim_AR,
+col = c("red", "blue", "green", "black"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LC_CIf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "green", "black"))
+ylim <- c(0.0001, 0.002)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LC_CIf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "green", "black"))
+ylim <- c(0.0001, 0.005)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LC_CIf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "green", "black"))
+text(1965, mxt[c("65","75", "85"),"1990"], labels=c("x=65", "x=75", "x=85"))
+agesPlot <- c("30", "45", "60", "75")
+xlim <- c(1960, 2061)
+ylim <- c(0.0001, 0.008)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LC_CIf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "green", "black"))
+text(1965, mxt[c("65","75", "85"),"1990"], labels=c("x=65", "x=75", "x=85"))
+agesPlot <- c("30", "45", "60", "75")
+xlim <- c(1960, 2061)
+ylim <- c(0.0001, 0.01)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LC_CIf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "green", "black"))
+text(1965, mxt[c("65","75", "85"),"1990"], labels=c("x=65", "x=75", "x=85"))
+agesPlot <- c("30", "45", "60", "75")
+xlim <- c(1960, 2061)
+ylim <- c(0.0001, 0.03)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LC_CIf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "green", "black"))
+text(1965, mxt[c("65","75", "85"),"1990"], labels=c("x=65", "x=75", "x=85"))
+mxt <- Dxt/Ext
+plotRateFan <- function(years, mxt, xlim, ylim, ratesSim, agesPlot, col){
+probs  <- c(2.5, 10, 25, 50, 75, 90, 97.5)
+par(mar=c(4.5,4,1,1))
+for (i in 1:length(agesPlot)) {
+if ( i == 1){
+plot(years, mxt[agesPlot[i], ], xlim = xlim, ylim = ylim,
+xlab = "year", ylab = "mortality rate (log scale)", pch = 20, log = "y")
+} else {
+points(years, mxt[agesPlot[i], ], pch = 20)
+}
+fan(t(ratesSim$rates[agesPlot[i], , ]), start = 2012,
+probs = probs, n.fan = 4,
+fan.col = colorRampPalette(c(col[i], "white")), ln = NULL)
+}
+}
+agesPlot <- c("30", "45", "60", "75")
+xlim <- c(1960, 2061)
+ylim <- c(0.0001, 0.03)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LC_CIf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "green", "black"))
+xlim <- c(1960, 2061)
+ylim <- c(0.001, 0.06)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LC_CIf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "green", "black"))
+ylim <- c(0.0005, 0.08)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LC_CIf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "green", "black"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCo_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "green", "black"))
+text(1965, mxt[c("65","75", "85"),"1990"], labels=c("x=65", "x=75", "x=85"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "green", "black"))
+agesPlot <- c("30", "45", "60", "75")
+xlim <- c(1960, 2061)
+ylim <- c(0.0005, 0.08)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+agesPlot <- c("30", "45", "60", "75")
+xlim <- c(1960, 2061)
+ylim <- c(0.0005, 0.1)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+agesPlot <- c("45", "60", "75")
+xlim <- c(1960, 2061)
+ylim <- c(0.005, 0.1)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+ylim <- c(0.0025, 0.1)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+ylim <- c(0.00025, 0.1)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+paste("x =",agesPlot)
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+agesPlot <- c("45", "60", "75")
+xlim <- c(1960, 2061)
+ylim <- c(0.0025, 0.2)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+agesPlot <- c("40", "60", "80")
+xlim <- c(1960, 2061)
+ylim <- c(0.00025, 0.2)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+agesPlot <- c("65", "75", "85")
+xlim <- c(1960, 2061)
+ylim <- c(0.00025, 0.2)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+ylim <- c(0.0025, 0.2)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+agesPlot <- c("40" "55", "70", "85")
+xlim <- c(1960, 2061)
+ylim <- c(0.0025, 0.2)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+ylim <- c(0.00025, 0.2)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+agesPlot <- c("40", "55", "70", "85")
+xlim <- c(1960, 2061)
+ylim <- c(0.0025, 0.2)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+ylim <- c(0.00025, 0.2)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+ylim <- c(0.0004, 0.2)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "green"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = APCf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = M7f_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = M6f_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBD_CIf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CIf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+ylim <- c(0.0002, 0.2)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+ylim <- c(0.0002, 0.15)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+ylim <- c(0.0002, 0.12)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+ylim <- c(0.00015, 0.2)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+pdf(file.path(figureDir, "LCf-mxt-AR.pdf"), 4*1, 7*1)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+dev.off()
+pdf(file.path(figureDir, "LCf-mxt-AR.pdf"), 4*0.9, 6*0.9)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+dev.off()
+pdf(file.path(figureDir, "LCf-mxt-ARt.pdf"), 4*0.9, 6*0.9)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = LCf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+dev.off()
+pdf(file.path(figureDir, "CBDf-mxt-AR.pdf"), 4*0.9, 6*0.9)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+dev.off()
+pdf(file.path(figureDir, "CBDf-mxt-ARt.pdf"), 4*0.9, 6*0.9)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_ARt,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+dev.off()
+pdf(file.path(figureDir, "CBDf-mxt-RWD.pdf"), 4*0.9, 6*0.9)
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = CBDf_sim_RWD,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+dev.off()
+plotRateFan(years = years, mxt = mxt, agesPlot = agesPlot, ratesSim = APCf_sim_AR,
+xlim = xlim, ylim = ylim, col = c("red", "blue", "black", "orange"))
+text(1965, mxt[agesPlot,"1990"], labels=paste("x=",agesPlot, sep = ""))
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/SimulateBootModels.R', echo=TRUE)
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/DefinePredictors.R', echo=TRUE)
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/FitModels.R', echo=TRUE)
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/SimulateModels.R', echo=TRUE)
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/FigureModelFansNoPU.R', echo=TRUE)
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/DefinePredictors.R', echo=TRUE)
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/USA/FitModelsUSA.R', echo=TRUE)
+nsim <- 1000
+#------------------------------------------------
+#          Simulate the models
+#------------------------------------------------
+#AR(1)
+CIo_sim_AR <- simulate(CIo_fit, nsim = nsim, seed = 1)
+CIf_sim_AR <- simulate(CIf_fit, nsim = nsim, seed = 1)
+LCo_sim_AR <- simulate(LCo_fit, nsim = nsim, seed = 1)
+LCf_sim_AR <- simulate(LCf_fit, nsim = nsim, seed = 1)
+LC_CIo_sim_AR <- simulate(LC_CIo_fit, nsim = nsim, seed = 1)
+LC_CIf_sim_AR <- simulate(LC_CIf_fit, nsim = nsim, seed = 1)
+CBDo_sim_AR <- simulate(CBDo_fit, nsim = nsim, seed = 1)
+CBDf_sim_AR <- simulate(CBDf_fit, nsim = nsim, seed = 1)
+CBD_CIo_sim_AR <- simulate(CBD_CIo_fit, nsim = nsim, seed = 1)
+CBD_CIf_sim_AR <- simulate(CBD_CIf_fit, nsim = nsim, seed = 1)
+APCo_sim_AR <- simulate(APCo_fit, nsim = nsim, seed = 1)
+APCf_sim_AR <- simulate(APCf_fit, nsim = nsim, seed = 1)
+M6o_sim_AR <- simulate(M6o_fit, nsim = nsim, seed = 1)
+M6f_sim_AR <- simulate(M6f_fit, nsim = nsim, seed = 1)
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/USA/SimulateBootModelsUSA.R', echo=TRUE)
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/USA/FigureMortalityRateFansAllModelsUSA.R', echo=TRUE)
+figureDir
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/DefinePredictors.R', echo=TRUE)
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/FitModels.R', echo=TRUE)
+nsim <- 1000
+#------------------------------------------------
+#          Simulate the models
+#------------------------------------------------
+#AR(1)
+CIo_sim_AR <- simulate(CIo_fit, nsim = nsim, seed = 1)
+CIf_sim_AR <- simulate(CIf_fit, nsim = nsim, seed = 1)
+LCo_sim_AR <- simulate(LCo_fit, nsim = nsim, seed = 1)
+LCf_sim_AR <- simulate(LCf_fit, nsim = nsim, seed = 1)
+LC_CIo_sim_AR <- simulate(LC_CIo_fit, nsim = nsim, seed = 1)
+LC_CIf_sim_AR <- simulate(LC_CIf_fit, nsim = nsim, seed = 1)
+CBDo_sim_AR <- simulate(CBDo_fit, nsim = nsim, seed = 1)
+CBDf_sim_AR <- simulate(CBDf_fit, nsim = nsim, seed = 1)
+CBD_CIo_sim_AR <- simulate(CBD_CIo_fit, nsim = nsim, seed = 1)
+CBD_CIf_sim_AR <- simulate(CBD_CIf_fit, nsim = nsim, seed = 1)
+APCo_sim_AR <- simulate(APCo_fit, nsim = nsim, seed = 1)
+APCf_sim_AR <- simulate(APCf_fit, nsim = nsim, seed = 1)
+M6o_sim_AR <- simulate(M6o_fit, nsim = nsim, seed = 1)
+M6f_sim_AR <- simulate(M6f_fit, nsim = nsim, seed = 1)
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/SimulateBootModels.R', echo=TRUE)
+library(RColorBrewer)
+figureDir <- "C:/Users/Andres M Villegas/Dropbox/Reduction Factors/Paper/Version160530/Figures"
+computeBias <- function(x, y, year){
+med1 <- apply(x[, yearPlot,],1, median)
+med2 <- apply(y[, yearPlot,],1, median)
+(med1 - med2)/med1
+}
+colours <- c(rgb(237/256, 125/256, 49/256),           #CI
+rgb(165/256, 165/256, 165/256),     #LC
+rgb(255/256, 192/256, 0/256),       #LC-CI
+rgb(68/256, 114/256, 196/256),      #CBD
+rgb(112/256, 173/256, 71/256),      #CBD-CI
+rgb(231/256, 25/256, 157/256)       #APC
+)
+matplot(ages.fit, t(rbind(computeBias(CIf_bootsim_AR$rates, CIo_bootsim_AR$rates),
+computeBias(LCf_bootsim_AR$rates, LCo_bootsim_AR$rates),
+computeBias(LC_CIf_bootsim_AR$rates, LC_CIo_bootsim_AR$rates),
+computeBias(CBDf_bootsim_AR$rates, CBDo_bootsim_AR$rates),
+computeBias(CBD_CIf_bootsim_AR$rates, CBD_CIo_bootsim_AR$rates),
+computeBias(APCf_bootsim_AR$rates, APCo_bootsim_AR$rates)
+)),
+type = "l", lty = 1, col = colours, ylab = "relative difference ((fitted-crude)/fitted)",
+lwd  = 2, xlab = "age", main = "Relative difference in mortality rates forecasts in 2040")
+lines(c(0,100), c(0,0), lty = 2)
+legend("bottomright", col = colours, lty = 1, lwd = 2,
+legend = c("CI", "LC", "LC-CI", "CBD", "CBD-CI", "APC"), bty = "n")
+yearPlot <- "2040"
+matplot(ages.fit, t(rbind(computeBias(CIf_bootsim_AR$rates, CIo_bootsim_AR$rates),
+computeBias(LCf_bootsim_AR$rates, LCo_bootsim_AR$rates),
+computeBias(LC_CIf_bootsim_AR$rates, LC_CIo_bootsim_AR$rates),
+computeBias(CBDf_bootsim_AR$rates, CBDo_bootsim_AR$rates),
+computeBias(CBD_CIf_bootsim_AR$rates, CBD_CIo_bootsim_AR$rates),
+computeBias(APCf_bootsim_AR$rates, APCo_bootsim_AR$rates)
+)),
+type = "l", lty = 1, col = colours, ylab = "relative difference ((fitted-crude)/fitted)",
+lwd  = 2, xlab = "age", main = "Relative difference in mortality rates forecasts in 2040")
+lines(c(0,100), c(0,0), lty = 2)
+legend("bottomright", col = colours, lty = 1, lwd = 2,
+legend = c("CI", "LC", "LC-CI", "CBD", "CBD-CI", "APC"), bty = "n")
+pdf(file.path(figureDir, paste("RateRelDiffEst-",yearPlot,".pdf", sep = "")), 4*2, 4*2)
+matplot(ages.fit, t(rbind(computeBias(CIf_bootsim_AR$rates, CIo_bootsim_AR$rates),
+computeBias(LCf_bootsim_AR$rates, LCo_bootsim_AR$rates),
+computeBias(LC_CIf_bootsim_AR$rates, LC_CIo_bootsim_AR$rates),
+computeBias(CBDf_bootsim_AR$rates, CBDo_bootsim_AR$rates),
+computeBias(CBD_CIf_bootsim_AR$rates, CBD_CIo_bootsim_AR$rates),
+computeBias(APCf_bootsim_AR$rates, APCo_bootsim_AR$rates)
+)),
+type = "l", lty = 1, col = colours, ylab = "relative difference ((fitted-crude)/fitted)",
+lwd  = 2, xlab = "age", main = "Relative difference in central mortality rate forecasts in 2040")
+lines(c(0,100), c(0,0), lty = 2)
+legend("bottomright", col = colours, lty = 1, lwd = 2,
+legend = c("CI", "LC", "LC-CI", "CBD", "CBD-CI", "APC"), bty = "n")
+dev.off()
+computeBias
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/USA/FitModelsUSA.R', echo=TRUE)
+nsim <- 1000
+#------------------------------------------------
+#          Simulate the models
+#------------------------------------------------
+#AR(1)
+CIo_sim_AR <- simulate(CIo_fit, nsim = nsim, seed = 1)
+CIf_sim_AR <- simulate(CIf_fit, nsim = nsim, seed = 1)
+LCo_sim_AR <- simulate(LCo_fit, nsim = nsim, seed = 1)
+LCf_sim_AR <- simulate(LCf_fit, nsim = nsim, seed = 1)
+LC_CIo_sim_AR <- simulate(LC_CIo_fit, nsim = nsim, seed = 1)
+LC_CIf_sim_AR <- simulate(LC_CIf_fit, nsim = nsim, seed = 1)
+CBDo_sim_AR <- simulate(CBDo_fit, nsim = nsim, seed = 1)
+CBDf_sim_AR <- simulate(CBDf_fit, nsim = nsim, seed = 1)
+CBD_CIo_sim_AR <- simulate(CBD_CIo_fit, nsim = nsim, seed = 1)
+CBD_CIf_sim_AR <- simulate(CBD_CIf_fit, nsim = nsim, seed = 1)
+APCo_sim_AR <- simulate(APCo_fit, nsim = nsim, seed = 1)
+APCf_sim_AR <- simulate(APCf_fit, nsim = nsim, seed = 1)
+M6o_sim_AR <- simulate(M6o_fit, nsim = nsim, seed = 1)
+M6f_sim_AR <- simulate(M6f_fit, nsim = nsim, seed = 1)
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/USA/SimulateBootModelsUSA.R', echo=TRUE)
+figureDir <- "C:/Users/Andres M Villegas/Dropbox/Reduction Factors/Paper/Version160530/Figures/USA"
+yearPlot <- "2040"
+computeBias <- function(x, y, year){
+med1 <- apply(x[, yearPlot,],1, median)
+med2 <- apply(y[, yearPlot,],1, median)
+(med1 - med2)/med1
+}
+matplot(ages.fit, t(rbind(computeBias(CIf_bootsim_AR$rates, CIo_bootsim_AR$rates),
+computeBias(LCf_bootsim_AR$rates, LCo_bootsim_AR$rates),
+computeBias(LC_CIf_bootsim_AR$rates, LC_CIo_bootsim_AR$rates),
+computeBias(CBDf_bootsim_AR$rates, CBDo_bootsim_AR$rates),
+computeBias(CBD_CIf_bootsim_AR$rates, CBD_CIo_bootsim_AR$rates),
+computeBias(APCf_bootsim_AR$rates, APCo_bootsim_AR$rates)
+)),
+type = "l", lty = 1, col = colours, ylab = "relative difference ((fitted-crude)/fitted)",
+lwd  = 2, xlab = "age", main = "Relative difference in central mortality rate forecasts in 2040")
+lines(c(0,100), c(0,0), lty = 2)
+legend("bottomright", col = colours, lty = 1, lwd = 2,
+legend = c("CI", "LC", "LC-CI", "CBD", "CBD-CI", "APC"), bty = "n")
+pdf(file.path(figureDir, paste("RateRelDiffEst-",yearPlot,".pdf", sep = "")), 4*2, 4*2)
+matplot(ages.fit, t(rbind(computeBias(CIf_bootsim_AR$rates, CIo_bootsim_AR$rates),
+computeBias(LCf_bootsim_AR$rates, LCo_bootsim_AR$rates),
+computeBias(LC_CIf_bootsim_AR$rates, LC_CIo_bootsim_AR$rates),
+computeBias(CBDf_bootsim_AR$rates, CBDo_bootsim_AR$rates),
+computeBias(CBD_CIf_bootsim_AR$rates, CBD_CIo_bootsim_AR$rates),
+computeBias(APCf_bootsim_AR$rates, APCo_bootsim_AR$rates)
+)),
+type = "l", lty = 1, col = colours, ylab = "relative difference ((fitted-crude)/fitted)",
+lwd  = 2, xlab = "age", main = "Relative difference in central mortality rate forecasts in 2040")
+lines(c(0,100), c(0,0), lty = 2)
+legend("bottomright", col = colours, lty = 1, lwd = 2,
+legend = c("CI", "LC", "LC-CI", "CBD", "CBD-CI", "APC"), bty = "n")
+dev.off()
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/SimulateBootModels.R', echo=TRUE)
+CIo_bootsim_AR$rates["40","2060",]
+quantile(CIo_bootsim_AR$rates["40","2060",], probs = c(0.025, 0.975))
+100 * quantile(CIo_bootsim_AR$rates["40","2060",], probs = c(0.025, 0.975))
+lapply(CIo_boot$bootParameters, function(x) x$ax)
+lapply(CIo_boot$bootParameters, function(x) x$ax["40"])
+simplify2array(lapply(CIo_boot$bootParameters, function(x) x$ax["40"]))
+100 * quantile(simplify2array(lapply(CIo_boot$bootParameters, function(x) x$ax["40"])),
+probs = c(0.025, 0.975))
+confIo <- 100 * quantile(simplify2array(lapply(CIo_boot$bootParameters, function(x) x$ax["40"])),
+probs = c(0.025, 0.975))
+confIf <- 100 * quantile(simplify2array(lapply(CIf_boot$bootParameters, function(x) x$ax["40"])),
+probs = c(0.025, 0.975))
+confIf
+confIf[2]-confIf[1]
+(confIo[2]-confIo[1])/(confIf[2]-confIf[1])
+source('C:/Users/Andres M Villegas/Google Drive/CEPAR - Sydney/Research Projects/Improvement rates/RCode/DefinePredictors.R', echo=TRUE)
+Dxt <- EWMaleData$Dxt
+Ext <- EWMaleData$Ext
+ages <- EWMaleData$ages
+years <- EWMaleData$years
+ages.fit <- 20:89
+Dxt <- EWMaleData$Dxt
+Ext <- EWMaleData$Ext
+ages <- EWMaleData$ages
+years <- EWMaleData$years
+ages.fit <- 20:89
+mxt <- Dxt/Ext
+ixt <- -log(mxt[,2:dim(mxt)[2]]/mxt[,1:(dim(mxt)[2]-1)])
+Dxt <- EWMaleData$Dxt
+library(StMoMo)
+Dxt <- EWMaleData$Dxt
+Ext <- EWMaleData$Ext
+ages <- EWMaleData$ages
+years <- EWMaleData$years
+ages.fit <- 20:89
+mxt <- Dxt/Ext
+ixt <- -log(mxt[,2:dim(mxt)[2]]/mxt[,1:(dim(mxt)[2]-1)])
+plot(years, mxt["65", t])
+mxt <- Dxt/Ext
+mxt
+plot(years, mxt["65", ])
+plot(years, mxt["65", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+plot(years, mxt["65", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+plot(years[-1], rxt["65", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+ixt <- -log(mxt[,2:dim(mxt)[2]]/mxt[,1:(dim(mxt)[2]-1)])
+plot(years[-1], rxt["65", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+years[-1]
+plot(years[-1], rxt["65", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+plot(years[-1], ixt["65", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+plot(years, mxt["65", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+plot(years[-1], ixt["65", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+plot(years, mxt["75", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+plot(years[-1], ixt["75", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+plot(years[-1], ixt["70", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+plot(years, mxt["70", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year")
+plot(years, mxt["70", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year", lwd = 2)
+plot(years[-1], ixt["70", ], type = "l", ylab = "Mortality Rate at Age 65", xlab = "year", lwd = 2)
+figureDir <- "C:/Users/z3509687/Dropbox/Reduction Factors/Paper/Version160530/Figures"
+plot(years[-1], ixt["70", ], type = "l", ylab = "Improvement Rate at Age 70", xlab = "year", lwd = 2)
+plot(years[-1], ixt["70", ], type = "l", xlim = range(years)
+ylab = "Improvement Rate at Age 70", xlab = "year", lwd = 2)
+plot(years[-1], ixt["70", ], type = "l", xlim = range(years),
+ylab = "Improvement Rate at Age 70", xlab = "year", lwd = 2)
+pdf(file.path(figureDir, "mxt-EW.pdf"), 4*0.9, 3.5*0.9)
+plot(years, mxt["70", ], type = "l", ylab = "Mortality Rate at Age 70", xlab = "year", lwd = 2)
+dev.off()
+pdf(file.path(figureDir, "Rxt-EW.pdf"), 4*0.9, 3.5*0.9)
+plot(years[-1], ixt["70", ], type = "l", xlim = range(years),
+ylab = "Improvement Rate at Age 70", xlab = "year", lwd = 2)
+dev.off()
+figureDir <- "C:/Users/Andres M Villegas/Dropbox/Reduction Factors/Paper/Version160530/Figures"
+figureDir <- "C:/Users/Andres M Villegas/Dropbox/Reduction Factors/Paper/Version160530/Figures"
+pdf(file.path(figureDir, "mxt-EW.pdf"), 4*0.9, 3.5*0.9)
+plot(years, mxt["70", ], type = "l", ylab = "Mortality Rate at Age 70", xlab = "year", lwd = 2)
+dev.off()
+pdf(file.path(figureDir, "Rxt-EW.pdf"), 4*0.9, 3.5*0.9)
+plot(years[-1], ixt["70", ], type = "l", xlim = range(years),
+ylab = "Improvement Rate at Age 70", xlab = "year", lwd = 2)
+dev.off()
+pdf(file.path(figureDir, "mxt-EW.pdf"), 4*2, 4*2)
+plot(years, mxt["70", ], type = "l", ylab = "Mortality Rate at Age 70", xlab = "year", lwd = 2)
+dev.off()
+pdf(file.path(figureDir, "Rxt-EW.pdf"), 4*0.9, 4*0.9)
+plot(years[-1], ixt["70", ], type = "l", xlim = range(years),
+ylab = "Improvement Rate at Age 70", xlab = "year", lwd = 2)
+dev.off()
+pdf(file.path(figureDir, "mxt-EW.pdf"), 4*1.5, 4*1.5)
+plot(years, mxt["70", ], type = "l", ylab = "Mortality Rate at Age 70", xlab = "year", lwd = 2)
+dev.off()
+pdf(file.path(figureDir, "Rxt-EW.pdf"), 4*1.5, 4*1.5)
+plot(years[-1], ixt["70", ], type = "l", xlim = range(years),
+ylab = "Improvement Rate at Age 70", xlab = "year", lwd = 2)
+dev.off()
+pdf(file.path(figureDir, "mxt-EW.pdf"), 4*1.3, 4*1.3)
+plot(years, mxt["70", ], type = "l", ylab = "Mortality Rate at Age 70", xlab = "year", lwd = 2)
+dev.off()
+pdf(file.path(figureDir, "Rxt-EW.pdf"), 4*1.3, 4*1.3)
+plot(years[-1], ixt["70", ], type = "l", xlim = range(years),
+ylab = "Improvement Rate at Age 70", xlab = "year", lwd = 2)
+dev.off()

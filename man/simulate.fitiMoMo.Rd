@@ -6,7 +6,7 @@
 \usage{
 \method{simulate}{fitiMoMo}(object, nsim = 1000, seed = NULL, h = 50,
   kt.order = c(1, 0, 0), kt.include.constant = TRUE,
-  kt.include.trend = FALSE, gc.order = c(1, 1, 0),
+  kt.include.trend = FALSE, gc.order = c(1, 0, 0),
   gc.include.constant = TRUE, jumpRates = NULL, kt.lookback = NULL,
   gc.lookback = NULL, ...)
 }

@@ -50,7 +50,7 @@ plotTwoModels <- function(x, y, nCol = 2, parametricbx = TRUE, type = "l",
 
   #ax
   if (!is.null(ax)) {
-    plot(x = ages, y = ax, ylab = "", xlab = "age",
+    matplot(x = ages, y = t(rbind(ax, y$ax)), ylab = "", xlab = "age",
          main = expression(paste(alpha[x], " vs. x", "")), type = type, ...)
   }
 
