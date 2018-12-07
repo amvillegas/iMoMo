@@ -42,12 +42,13 @@ plotTwoBootstraps <- function(x, y, nCol = 2, parametricbx = TRUE,
   #ax
   if (!is.null(ax)) {
     axBoot <- sapply(X = x$bootParameters, FUN = function(x) x$ax)
+    axBoot.y <- sapply(X = y$bootParameters, FUN = function(x) x$ax)
+    ylim <- range(axBoot, axBoot.y, finite = TRUE)
     plotParameterFan(x = ages, y = ax, yBoot = axBoot,
                      main = expression(paste(alpha[x], " vs. x", "")),
                      xlab = "age", ylab = "", probs = probs,
-                     fan.col = fan.col, n.fan = n.fan, ...)
-    axBoot <- sapply(X = y$bootParameters, FUN = function(x) x$ax)
-    plotParameterFan(x = ages, y = ax, yBoot = axBoot,
+                     fan.col = fan.col, n.fan = n.fan, ylim = ylim, ...)
+    plotParameterFan(x = ages, y = ax, yBoot = axBoot.y,
                      main = expression(paste(alpha[x], " vs. x", "")),
                      xlab = "age", ylab = "", probs = probs,
                      fan.col = fan.col.y, n.fan = n.fan, new = FALSE, ...)
@@ -63,13 +64,14 @@ plotTwoBootstraps <- function(x, y, nCol = 2, parametricbx = TRUE,
       #bx
       if (parametricbx == TRUE || is.nonparametric(x$model$model$periodAgeFun[[i]])) {
         bxBoot <- sapply(X = x$bootParameters, FUN = function(x) x$bx[, i])
+        bxBoot.y <- sapply(X = y$bootParameters, FUN = function(x) x$bx[, i])
+        ylim <- range(bxBoot, bxBoot.y, finite = TRUE)
         plotParameterFan(x = ages, y = bx[, i], yBoot = bxBoot,
                          main = substitute(paste(beta[x]^{(i)}, " vs. x", ""),
-                                           list(i = i)),
+                                           list(i = i)), ylim = ylim,
                          xlab = "age", ylab = "", probs = probs,
                          fan.col = fan.col, n.fan = n.fan, ...)
-        bxBoot <- sapply(X = y$bootParameters, FUN = function(x) x$bx[, i])
-        plotParameterFan(x = ages, y = bx[, i], yBoot = bxBoot,
+        plotParameterFan(x = ages, y = bx[, i], yBoot = bxBoot.y,
                          main = substitute(paste(beta[x]^{(i)}, " vs. x", ""),
                                            list(i = i)),
                          xlab = "age", ylab = "", probs = probs,
@@ -78,13 +80,15 @@ plotTwoBootstraps <- function(x, y, nCol = 2, parametricbx = TRUE,
       }
       #kt
       ktBoot <- sapply(X = x$bootParameters, FUN = function(x) x$kt[i, ])
+      ktBoot.y <- sapply(X = y$bootParameters, FUN = function(x) x$kt[i, ])
+      ylim <- range(ktBoot, ktBoot.y, finite = TRUE)
       plotParameterFan(x = years, y = kt[i, ], yBoot = ktBoot,
                        main = substitute(paste(kappa[t]^{(i)}, " vs. t", ""),
-                                         list(i = i)),
+                                         list(i = i)), ylim = ylim,
                        xlab = "year", ylab = "", probs = probs,
                        fan.col = fan.col, n.fan = n.fan, ...)
-      ktBoot <- sapply(X = y$bootParameters, FUN = function(x) x$kt[i, ])
-      plotParameterFan(x = years, y = kt[i, ], yBoot = ktBoot,
+
+      plotParameterFan(x = years, y = kt[i, ], yBoot = ktBoot.y,
                        main = substitute(paste(kappa[t]^{(i)}, " vs. t", ""),
                                          list(i = i)),
                        xlab = "year", ylab = "", probs = probs,
@@ -97,24 +101,27 @@ plotTwoBootstraps <- function(x, y, nCol = 2, parametricbx = TRUE,
     #bx0
     if (parametricbx == TRUE || is.nonparametric(x$model$model$cohortAgeFun)) {
       b0xBoot <- sapply(X = x$bootParameters, FUN = function(x) x$b0x)
+      b0xBoot.y <- sapply(X = y$bootParameters, FUN = function(x) x$b0x)
+      ylim <- range(b0xBoot, b0xBoot.y, finite = TRUE)
       plotParameterFan(x = ages, y = b0x, yBoot = b0xBoot,
                        main = substitute(paste(beta[x]^{(i)}, " vs. x", ""), list(i = 0)),
-                       xlab = "age", ylab = "", probs = probs,
+                       xlab = "age", ylab = "", probs = probs, ylim = ylim,
                        fan.col = fan.col, n.fan = n.fan, ...)
-      b0xBoot <- sapply(X = y$bootParameters, FUN = function(x) x$b0x)
-      plotParameterFan(x = ages, y = b0x, yBoot = b0xBoot,
+
+      plotParameterFan(x = ages, y = b0x, yBoot = b0xBoot.y,
                        main = substitute(paste(beta[x]^{(i)}, " vs. x", ""), list(i = 0)),
                        xlab = "age", ylab = "", probs = probs,
                        fan.col = fan.col.y, n.fan = n.fan, new = FALSE, ...)
     }
     #gc
     gcBoot <- sapply(X = x$bootParameters, FUN = function(x) x$gc)
+    gcBoot.y <- sapply(X = y$bootParameters, FUN = function(x) x$gc)
+    ylim <- range(gcBoot, gcBoot.y, finite = TRUE)
     plotParameterFan(x = cohorts, y = gc, yBoot = gcBoot,
                      main = expression(paste(gamma[t-x], " vs. t-x", "")),
-                     xlab = "cohort", ylab = "", probs = probs,
+                     xlab = "cohort", ylab = "", probs = probs, ylim = ylim,
                      fan.col = fan.col, n.fan = n.fan, ...)
-    gcBoot <- sapply(X = y$bootParameters, FUN = function(x) x$gc)
-    plotParameterFan(x = cohorts, y = gc, yBoot = gcBoot,
+    plotParameterFan(x = cohorts, y = gc, yBoot = gcBoot.y,
                      main = expression(paste(gamma[t-x], " vs. t-x", "")),
                      xlab = "cohort", ylab = "", probs = probs,
                      fan.col = fan.col.y, n.fan = n.fan, new = FALSE, ...)
@@ -127,9 +134,10 @@ plotTwoBootstraps <- function(x, y, nCol = 2, parametricbx = TRUE,
 #'
 #' @keywords internal
 plotParameterFan <- function(x, y, yBoot, main, xlab, ylab, probs, fan.col,
-                             n.fan, new = TRUE, ...) {
+                             n.fan, ylim = range(yBoot, finite = TRUE),
+                             new = TRUE, ...) {
   if(new) plot(NULL, ylab = ylab, xlab = xlab, main = main, xlim = range(x),
-       ylim = range(yBoot, finite = TRUE))
+       ylim = ylim)
 
   #Compute quantiles
   pp <- apply(t(yBoot), 2, quantile, probs = probs / 100, na.rm = TRUE)

@@ -4,8 +4,8 @@
 \alias{plotTwoBootstraps}
 \title{Plot bootstrapped parameters of a Stochastic Mortality Model}
 \usage{
-plotTwoBootstraps(x, y, nCol = 2, parametricbx = TRUE, colour = rgb(0, 0,
-  0), colour.y = rgb(1, 0, 0), probs = c(2.5, 10, 25, 50, 75, 90, 97.5),
+plotTwoBootstraps(x, y, nCol = 2, parametricbx = TRUE, colour = rgb(1, 0,
+  0), colour.y = rgb(0, 0, 0), probs = c(2.5, 10, 25, 50, 75, 90, 97.5),
   ...)
 }
 \description{

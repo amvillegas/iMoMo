@@ -29,7 +29,8 @@ iMoMo  <- function(model, type = c("observed", "fitted")) {
 
 #' Create a new Imprvement Rate Mortality Model of tiyp fitted
 #' @export
-iMoMoCIF  <- function(model) {
+iMoMoCIF  <- function(model, constFun = function(ax, dx, bx, kt, b0x, gc, wxt, ages)
+  list(ax = ax, dx = dx, bx = bx, kt = kt, b0x = b0x, gc = gc)) {
   model$type = "fitted"
   #---------------------------------------------------------------------
   # Check inputs
@@ -45,6 +46,7 @@ iMoMoCIF  <- function(model) {
   }
   model$gnmFormula <- paste(model$gnmFormula, "factor(x):t", sep = " + ")
   model$constFun2 <- model$constFun
+  model$constFun3 <- constFun
   model$constFun <- function(ax, bx, kt, b0x, gc, wxt, ages)
     list(ax = ax, bx = bx, kt = kt, b0x = b0x, gc = gc)
   class(model) <-  c("iMoMo", "iMoMoCIF", "iMoMoF", class(model))

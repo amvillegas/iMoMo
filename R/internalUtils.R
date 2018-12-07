@@ -78,8 +78,12 @@ transParamiMoMoCIF <- function(out){
   constPar <- out$model$constFun2(ax = ax, bx = bx, kt = kt,
                                b0x = b0x, gc = gc, wxt = out$wxt,
                                ages = ages)
-
+  constPar <- out$model$constFun3(ax = constPar$ax, dx = dx, bx = constPar$bx,
+                                  kt = constPar$kt, b0x = constPar$b0x,
+                                  gc = constPar$gc, wxt = out$wxt,
+                                  ages = ages)
   out$ax <- constPar$ax
+  dx <- constPar$dx
   out$bx <- constPar$bx
   out$kt <- constPar$kt
   out$b0x <- constPar$b0x
@@ -96,6 +100,17 @@ transParamiMoMoCIF <- function(out){
   #Transform to improvement rate setting
   out <- transParamiMoMoF(out)
   out$ax <- -dx
+
+#   #Apply initial model constraints
+#   constPar <- out$model$constFun2(ax = out$ax, bx = out$bx, kt = out$kt,
+#                                   b0x = out$b0x, gc = out$gc, wxt = out$wxt[,-1],
+#                                   ages = ages)
+#   out$ax <- constPar$ax
+#   out$bx <- constPar$bx
+#   out$kt <- constPar$kt
+#   out$b0x <- constPar$b0x
+#   out$gc <- constPar$gc
+
 
   if(is.null(out$kt)) out <- c(out, list(kt=NULL))
   if(is.null(out$bx)) out <- c(out, list(bx=NULL))

@@ -11,7 +11,7 @@ fit.iMoMoF <- function(object, Dxt, Ext, ages = 1:nrow(Dxt),
   #Fit the equivalent mortality rate model
   tempObject <- object
   class(tempObject) <- "StMoMo"
-  out <- fit(tempObject, Dxt, Ext, ages = ages,
+  out <- fit(tempObject, Dxt = Dxt, Ext = Ext, ages = ages,
              years = years, ages.fit = ages.fit,
              years.fit = years.fit, wxt = wxt,
              start.ax = start.ax, start.bx = start.bx, start.kt = start.kt,
