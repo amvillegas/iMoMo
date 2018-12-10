@@ -11,4 +11,3 @@ y: a matrix containing the multivariate timeseries
 p: Integer for the lag order (default is p=1)
 d: Degree of differencing (default is d=0)
 }
-

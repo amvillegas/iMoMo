@@ -10,4 +10,3 @@ getMinimalFitiMoMo(object)
 Extract a lighter version of a  Improvment Rate Mortality Model
 }
 \keyword{internal}
-

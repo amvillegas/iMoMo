@@ -28,4 +28,3 @@ See \code{\link[graphics]{plot}}.}
 \description{
 Plot fitted parameters from two stochastic mortality model
 }
-

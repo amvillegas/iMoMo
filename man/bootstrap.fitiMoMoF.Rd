@@ -4,10 +4,10 @@
 \alias{bootstrap.fitiMoMoF}
 \title{Bootstrap an Improvement Rate Mortality Model of type fitted}
 \usage{
-\method{bootstrap}{fitiMoMoF}(object, nBoot = 1, type = c("semiparametric",
-  "residual"), deathType = c("observed", "fitted"), ...)
+\method{bootstrap}{fitiMoMoF}(object, nBoot = 1,
+  type = c("semiparametric", "residual"), deathType = c("observed",
+  "fitted"), ...)
 }
 \description{
 Bootstrap an Improvement Rate Mortality Model of type fitted
 }
-

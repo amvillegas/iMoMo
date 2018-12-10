@@ -4,9 +4,9 @@
 \alias{iMoMoCIF}
 \title{Create a new Imprvement Rate Mortality Model of tiyp fitted}
 \usage{
-iMoMoCIF(model)
+iMoMoCIF(model, constFun = function(ax, dx, bx, kt, b0x, gc, wxt, ages)
+  list(ax = ax, dx = dx, bx = bx, kt = kt, b0x = b0x, gc = gc))
 }
 \description{
 Create a new Imprvement Rate Mortality Model of tiyp fitted
 }
-

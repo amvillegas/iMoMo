@@ -11,4 +11,3 @@ plotParameterFan(x, y, yBoot, main, xlab, ylab, probs, fan.col, n.fan,
 Plot fanchart of the parameters
 }
 \keyword{internal}
-

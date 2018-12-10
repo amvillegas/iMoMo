@@ -12,4 +12,3 @@ Transform fitted parameters of fitted improvement
 rated model into the appropriate output format
 }
 \keyword{internal}
-

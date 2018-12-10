@@ -13,4 +13,3 @@ with constant improvement rates}
 Bootstrap an Improvement Rate Mortality Model of type fitted
 with constant improvement rates
 }
-

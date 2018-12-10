@@ -13,4 +13,3 @@
 \description{
 Simulate future sample paths from an improvement  Model
 }
-

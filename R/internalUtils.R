@@ -1,3 +1,15 @@
+#' Transform fitted parameters of direct improvement
+#' rated model into the appropriate output format
+#' @keywords internal
+transParamiMoMoD <- function(out){
+  if(!is.null(out$kt)) out$kt <- out$kt * -1
+  if(!is.null(out$gc)) out$gc <- out$gc * -1
+  if(!is.null(out$ax)) out$ax <- out$ax * -1
+  out
+}
+
+
+
 #' Transform fitted parameters of observed improvement
 #' rated model into the appropriate output format
 #' @keywords internal

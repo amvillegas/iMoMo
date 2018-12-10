@@ -14,4 +14,3 @@ object: An object of class "ets", "Arima" or "ar".
 n.ahead: Number of periods for the simulated series
 colnames: Name of the columns (time periods)
 }
-

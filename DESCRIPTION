@@ -1,7 +1,7 @@
 Package: iMoMo
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 0.1.0
+Version: 0.1.0.9000
 Author: Andres Villegas <andresmauriciovillegas@gmail.com>
 Maintainer: Andres Villegas <andresmauriciovillegas@gmail.com>
 Description: More about what it does (maybe more than one line)
@@ -13,4 +13,4 @@ Imports:
     vars
 License: What license is it under?
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.1

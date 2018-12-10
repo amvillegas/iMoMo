@@ -10,4 +10,3 @@ constRemoveTrends(ax, bx, kt, dx)
 Remove trends from kt
 }
 \keyword{internal}
-

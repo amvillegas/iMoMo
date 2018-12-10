@@ -16,4 +16,3 @@ n.ahead: Number of periods for the simulated series
 n.path: Number of paths to be simulated
 colnames: Name of the columns (time periods)
 }
-
