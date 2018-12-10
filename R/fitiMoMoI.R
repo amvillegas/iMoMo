@@ -67,4 +67,31 @@ fit.iMoMoI <- function(object, data = NULL, Dxt = NULL, Ext = NULL,
 
 
 
+  out <- fit(object$model, Dxt = Dxt, Ext = Ext, ages = ages,
+             years = years, ages.fit = ages.fit,
+             years.fit = years.fit, wxt = wxt,
+             start.ax = start.ax, start.bx = start.bx, start.kt = start.kt,
+             start.b0x = start.b0x, start.gc = start.gc, verbose = verbose,
+             ...)
+  out$fittingModel <- out
+
+  if(object$staticAgeFun == FALSE){
+    out <- transParamiMoMoI(out)
+  } else {
+
+  }
+
+  #Apply identfiability constraints
+  constPar <- object$constFun(out$ax, out$bx, out$kt,
+                              out$b0x, out$gc, wxt, ages.fit)
+  out$ax <- constPar$ax
+  out$bx <- constPar$bx
+  out$kt <- constPar$kt
+  out$b0x <- constPar$b0x
+  out$gc <- constPar$gc
+
+  #Prepare output
+  out$model <- object
+  class(out) <- c("fitiMoMoI", "fitiMoMo", "fitStMoMo")
+  out
 }

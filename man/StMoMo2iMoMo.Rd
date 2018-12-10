@@ -4,7 +4,9 @@
 \alias{StMoMo2iMoMo}
 \title{Transform a mortality rate model to an improvement rate model}
 \usage{
-StMoMo2iMoMo(model, type = c("indirect", "direct"))
+StMoMo2iMoMo(model, type = c("indirect", "direct"),
+  constFun = function(ax, bx, kt, b0x, gc, wxt, ages) list(ax = ax, bx =
+  bx, kt = kt, b0x = b0x, gc = gc))
 }
 \arguments{
 \item{model}{A StMoMo object representing the mortality rate model
@@ -16,6 +18,14 @@ use a \code{"log"} link.}
 \code{"indirect"} would estimate the equivalent mortality rate model
 and the transform the model into improvement rates. \code{"direct"}
 would estimate the model directly on the improvement rate model.}
+
+\item{constFun}{function defining the identifiability constraints of the
+model. It must be a function of the form
+\code{constFun <- function(ax, bx, kt, b0x, gc, wxt, ages)} taking a set
+of fitted model parameters and returning a list
+\code{list(ax = ax, bx = bx, kt = kt, b0x = b0x, gc = gc)}
+of the model parameters with the identifiability constraints applied. If
+omitted no identifiability constraints are applied to the model.}
 }
 \description{
 Transforms a StMoMo object representing a mortality rate model

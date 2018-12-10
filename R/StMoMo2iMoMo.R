@@ -52,7 +52,7 @@ StMoMo2iMoMo <- function(model, type = c("indirect", "direct"),
   #Structure of the model is the same but without a static age
   textFormula <- sub("log m\\[x,t\\] = a\\[x\\] \\+ ", "eta\\[x,t\\] = ",
                      model$textFormula)
-  out <- list(staticAgeFun = NULL,
+  out <- list(staticAgeFun = FALSE,
               periodAgeFun = model$periodAgeFun,
               cohortAgeFun = model$cohortAgeFun,
               N = model$N,
