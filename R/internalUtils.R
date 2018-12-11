@@ -43,6 +43,80 @@ transParamiMoMoI <- function(out){
 }
 
 
+#' Transform fitted parameters of indirect improvement
+#' rated model with constant improvement rates into
+#' the appropriate output format
+#' @keywords internal
+transParamiMoMoI_CI <- function(out, constFunEst){
+  #Get the model parameters
+  ages <- out$ages
+  nAges <- length(ages)
+  kt <- out$kt
+  bx <- out$bx
+  b0x <- out$b0x
+  gc <- out$gc
+
+  #Get static age function and constant improvements
+  axTemp <- out$ax[grep(pattern = "^[-]?[[:digit:]]+$",
+                        names(out$ax))] # ax represents the Ax in the
+                                        # improvement model
+  dxTemp <- out$ax[grep(pattern = ":t",
+                        names(out$ax))] # dx represents the ax in the
+                                        # improvement model
+  names(dxTemp) <- sub(pattern = ":t", replacement = "" ,
+                       x = names(dxTemp))
+  ax <- rep(0,nAges)
+  names(ax) <- ages
+  ax[names(axTemp)] <- axTemp
+  ax[is.na(ax)] <- 0
+
+  dx <- rep(0,nAges)
+  names(dx) <- ages
+  dx[names(dxTemp)] <- dxTemp
+  dx[is.na(dx)] <- 0
+
+  #Apply trasnformations
+  t0 <- out$years[1]
+  ax <- ax +  t0 * dx
+
+  constPar <- constFunEst(Ax = ax, ax = dx, bx = bx, kt = kt,
+                                  b0x = b0x, gc = gc, wxt = out$wxt,
+                                  ages = ages)
+
+  Ax <- constPar$Ax
+  out$ax <- constPar$Ax
+  dx <- constPar$ax
+  out$bx <- constPar$bx
+  out$kt <- constPar$kt
+  out$b0x <- constPar$b0x
+  out$gc <- constPar$gc
+
+  #Remove linear trends from the kts and pass them to the constant rates
+  if (out$model$N > 0){
+    constPar <- constRemoveTrends(ax = Ax, bx = constPar$bx,
+                                  kt = constPar$kt, dx = dx)
+
+    out$ax <- constPar$ax
+    out$bx <- constPar$bx
+    out$kt <- constPar$kt
+    dx <- constPar$dx
+  }
+
+  #Transform to improvement rate setting
+  out <- transParamiMoMoI(out)
+  #out$Ax <- Ax
+  out$ax <- -dx
+
+  if(is.null(out$kt)) out <- c(out, list(kt=NULL))
+  if(is.null(out$bx)) out <- c(out, list(bx=NULL))
+  if(is.null(out$b0x)) out <- c(out, list(b0x=NULL))
+  if(is.null(out$gc)) out <- c(out, list(gc=NULL))
+
+  out
+}
+
+
+
 
 #' Transform fitted parameters of observed improvement
 #' rated model into the appropriate output format
@@ -128,6 +202,8 @@ transParamiMoMoCIF <- function(out){
                                   kt = constPar$kt, b0x = constPar$b0x,
                                   gc = constPar$gc, wxt = out$wxt,
                                   ages = ages)
+
+
   out$ax <- constPar$ax
   dx <- constPar$dx
   out$bx <- constPar$bx

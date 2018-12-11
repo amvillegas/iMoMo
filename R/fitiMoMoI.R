@@ -78,7 +78,7 @@ fit.iMoMoI <- function(object, data = NULL, Dxt = NULL, Ext = NULL,
   if(object$staticAgeFun == FALSE){
     out <- transParamiMoMoI(out)
   } else {
-
+    out <- transParamiMoMoI_CI(out, object$constFunEst)
   }
 
   #Apply identfiability constraints

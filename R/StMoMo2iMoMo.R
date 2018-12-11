@@ -37,8 +37,8 @@ StMoMo2iMoMo <- function(model, type = c("indirect", "direct"),
   }
   if (model$link != "log")
     stop("The base StMoMo model needs to use a log link")
-  if (type == "fitted" && model$staticAgeFun == FALSE) {
-    stop("For models of type fitted the StMoMo model needs
+  if (type == "indirect" && model$staticAgeFun == FALSE) {
+    stop("For models estimated inderictly the StMoMo model needs
          to include an static age function")
   }
 
@@ -49,9 +49,8 @@ StMoMo2iMoMo <- function(model, type = c("indirect", "direct"),
                     cohortAgeFun = model$cohortAgeFun)
   }
 
-  #Structure of the model is the same but without a static age
-  textFormula <- sub("log m\\[x,t\\] = a\\[x\\] \\+ ", "eta\\[x,t\\] = ",
-                     model$textFormula)
+  textFormula <- sub("log m\\[x,t\\]", "eta\\[x,t\\]", model$textFormula)
+  textFormula <- sub("a\\[x\\] \\+ ", "", textFormula)
   out <- list(staticAgeFun = FALSE,
               periodAgeFun = model$periodAgeFun,
               cohortAgeFun = model$cohortAgeFun,
