@@ -65,8 +65,32 @@ fit.iMoMoI <- function(object, data = NULL, Dxt = NULL, Ext = NULL,
   if (is.null(ages.fit)) ages.fit <- ages
   if (is.null(years.fit)) years.fit <- years
 
+  #Process starting values
+  nYears <- length(years.fit)
+  N <- object$N
+  start.ax <- NULL
+  if (N > 0) {
+    if (!is.null(start.kt)) {
+      if (ncol(start.kt) != (nYears - 1)) {
+        stop( "Mismatch between the number of years and start.kt.")
+      }
+      if (nrow(start.kt) != N) {
+        stop( "Mismatch between the number of age/period terms and start.kt.")
+      }
+      Kt <- matrix(NA, nrow = N, ncol = nYears)
+      for (i in 1:N) {
+        Kt[i, ] <- c(0, cumsum(start.kt[i, ]))
+      }
+      start.kt <- Kt
+    }
+  }
+  if (!is.null(object$cohortAgeFun)) {
+    if (!is.null(start.gc)){
+      start.gc <- c(0, cumsum(start.gc))
+    }
+  }
 
-
+  #Fit the model
   out <- fit(object$model, Dxt = Dxt, Ext = Ext, ages = ages,
              years = years, ages.fit = ages.fit,
              years.fit = years.fit, wxt = wxt,

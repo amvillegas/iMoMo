@@ -2,7 +2,7 @@
 % Please edit documentation in R/fittedfitiMoMo.R
 \name{fitted.fitiMoMo}
 \alias{fitted.fitiMoMo}
-\title{Compute fitted values for a Stochastic Mortality Model}
+\title{Compute fitted values for an Improvement Rate Model}
 \usage{
 \method{fitted}{fitiMoMo}(object, type = c("improvements", "rates",
   "deaths"), ...)
