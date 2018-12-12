@@ -88,11 +88,11 @@ fit.iMoMoD <- function(object, data = NULL, Dxt = NULL, Ext = NULL,
   #Apply identfiability constraints
   constPar <- object$constFun(out$ax, out$bx, out$kt,
                               out$b0x, out$gc, wxt, ages.fit)
-  out$ax <- constPar$ax
-  out$bx <- constPar$bx
-  out$kt <- constPar$kt
-  out$b0x <- constPar$b0x
-  out$gc <- constPar$gc
+  if (!is.null(constPar$ax)) out$ax <- constPar$ax
+  if (!is.null(constPar$bx)) out$bx <- constPar$bx
+  if (!is.null(constPar$kt)) out$kt <- constPar$kt
+  if (!is.null(constPar$b0x)) out$b0x <- constPar$b0x
+  if (!is.null(constPar$gc)) out$gc <- constPar$gc
 
   #Prepare output
   out$Dxt <- Dxt[which(ages %in% ages.fit),

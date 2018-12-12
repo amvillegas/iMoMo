@@ -1,4 +1,4 @@
-#' Compute fitted values for a Stochastic Mortality Model
+#' Compute fitted values for an Improvement Rate Model
 #'
 #' Returns fitted values for the data used in Improvement Rate Stochastic
 #' Mortality Model.
@@ -11,7 +11,7 @@ fitted.fitiMoMo<-function(object, type = c("improvements", "rates", "deaths"), .
                                            gc = gc, oxt = NULL, ages = ages,
                                            years = years))
   n <- dim(object$Dxt)[2]
-  if (object$model$type == "observed"){
+  if (object$model$type != "fitted"){
     rates <- exp(-improvements) * object$Dxt[, 1:(n - 1)] / object$Ext[, 1:(n - 1)]
   } else {
     RF <- exp(-t(apply(improvements, 1, cumsum)))
