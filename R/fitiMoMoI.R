@@ -109,6 +109,11 @@ fit.iMoMoI <- function(object, data = NULL, Dxt = NULL, Ext = NULL,
   constPar <- object$constFun(out$ax, out$bx, out$kt,
                               out$b0x, out$gc, wxt, ages.fit)
 
+  #Recover values of Ax which is the log of the fitted rates in the first year
+  Dx1hat <- fitted(out$fittingModel$fittingModel)[out$fittingModel$fittingModel$data$t == years.fit[1]]
+  out$Ax  <- log(Dx1hat/out$Ext[,1])
+
+
   if (!is.null(constPar$ax)) out$ax <- constPar$ax
   if (!is.null(constPar$bx)) out$bx <- constPar$bx
   if (!is.null(constPar$kt)) out$kt <- constPar$kt

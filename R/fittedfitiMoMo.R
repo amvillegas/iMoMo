@@ -11,12 +11,15 @@ fitted.fitiMoMo<-function(object, type = c("improvements", "rates", "deaths"), .
                                            gc = gc, oxt = NULL, ages = ages,
                                            years = years))
   n <- dim(object$Dxt)[2]
-  if (object$model$type != "fitted"){
-    rates <- exp(-improvements) * object$Dxt[, 1:(n - 1)] / object$Ext[, 1:(n - 1)]
-  } else {
-    RF <- exp(-t(apply(improvements, 1, cumsum)))
+  if (object$model$type == "indirect"){
+    RF <- exp(-t(apply(cbind(0, improvements), 1, cumsum)))
     rates <- array(exp(object$Ax), dim = dim(RF)) * RF
+    dimnames(rates) <- dimnames(object$Ext)
+    deaths <- object$Ext * rates
+  } else {
+    rates <- exp(-improvements) * object$Dxt[, 1:(n - 1)] / object$Ext[, 1:(n - 1)]
+    deaths <- object$Ext[, 1:(n - 1)] * rates
   }
-  deaths <- object$Ext[, 1:(n - 1)] * rates
+
   switch(type, rates = rates, deaths = deaths, improvements = improvements)
 }
