@@ -113,6 +113,9 @@ fit.iMoMoI <- function(object, data = NULL, Dxt = NULL, Ext = NULL,
   Dx1hat <- fitted(out$fittingModel$fittingModel)[out$fittingModel$fittingModel$data$t == years.fit[1]]
   out$Ax  <- log(Dx1hat/out$Ext[,1])
 
+  # Compute log-likelihood and the deviance
+  out$loglik <- logLik(out$fittingModel$fittingModel)[1]
+  out$deviance <- out$fittingModel$fittingModel$deviance
 
   if (!is.null(constPar$ax)) out$ax <- constPar$ax
   if (!is.null(constPar$bx)) out$bx <- constPar$bx
