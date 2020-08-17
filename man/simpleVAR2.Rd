@@ -4,8 +4,7 @@
 \alias{simpleVAR2}
 \title{Simple VAR estimation}
 \usage{
-simpleVAR2(y, p = 1, d = 0, type = c("const", "trend", "both",
-  "none"))
+simpleVAR2(y, p = 1, d = 0, type = c("const", "trend", "both", "none"))
 }
 \description{
 y: a matrix containing the multivariate timeseries

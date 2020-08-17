@@ -4,10 +4,23 @@
 \alias{fit.iMoMoO}
 \title{Fit an Improvement Rate Mortality Model of type observed}
 \usage{
-\method{fit}{iMoMoO}(object, Dxt, Ext, ages = 1:nrow(Dxt),
-  years = 1:ncol(Dxt), ages.fit = ages, years.fit = years,
-  wxt = NULL, start.ax = NULL, start.bx = NULL, start.kt = NULL,
-  start.b0x = NULL, start.gc = NULL, verbose = TRUE, ...)
+\method{fit}{iMoMoO}(
+  object,
+  Dxt,
+  Ext,
+  ages = 1:nrow(Dxt),
+  years = 1:ncol(Dxt),
+  ages.fit = ages,
+  years.fit = years,
+  wxt = NULL,
+  start.ax = NULL,
+  start.bx = NULL,
+  start.kt = NULL,
+  start.b0x = NULL,
+  start.gc = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \description{
 Fit an Improvement Rate Mortality Model of type observed

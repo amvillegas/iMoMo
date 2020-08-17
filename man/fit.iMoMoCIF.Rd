@@ -4,10 +4,23 @@
 \alias{fit.iMoMoCIF}
 \title{Fit an Improvement Rate Mortality Model of type fitted}
 \usage{
-\method{fit}{iMoMoCIF}(object, Dxt, Ext, ages = 1:nrow(Dxt),
-  years = 1:ncol(Dxt), ages.fit = ages, years.fit = years,
-  wxt = NULL, start.ax = NULL, start.bx = NULL, start.kt = NULL,
-  start.b0x = NULL, start.gc = NULL, verbose = TRUE, ...)
+\method{fit}{iMoMoCIF}(
+  object,
+  Dxt,
+  Ext,
+  ages = 1:nrow(Dxt),
+  years = 1:ncol(Dxt),
+  ages.fit = ages,
+  years.fit = years,
+  wxt = NULL,
+  start.ax = NULL,
+  start.bx = NULL,
+  start.kt = NULL,
+  start.b0x = NULL,
+  start.gc = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \description{
 Fit an Improvement Rate Mortality Model of type fitted

@@ -3,13 +3,7 @@
 \docType{package}
 \name{iMoMo}
 \alias{iMoMo}
-\alias{iMoMo-package}
 \title{iMoMo.}
 \usage{
 iMoMo(model, type = c("observed", "fitted"))
-}
-\description{
-iMoMo.
-
-Create a new Imprvement Rate Mortality Model
 }

@@ -4,9 +4,12 @@
 \alias{StMoMo2iMoMo}
 \title{Transform a mortality rate model to an improvement rate model}
 \usage{
-StMoMo2iMoMo(model, type = c("indirect", "direct"),
-  constFun = function(ax, bx, kt, b0x, gc, wxt, ages) list(ax = ax, bx =
-  bx, kt = kt, b0x = b0x, gc = gc))
+StMoMo2iMoMo(
+  model,
+  type = c("indirect", "direct"),
+  constFun = function(ax, bx, kt, b0x, gc, wxt, ages) list(ax = ax, bx = bx, kt = kt,
+    b0x = b0x, gc = gc)
+)
 }
 \arguments{
 \item{model}{A StMoMo object representing the mortality rate model

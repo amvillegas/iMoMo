@@ -4,10 +4,24 @@
 \alias{fit.iMoMoI}
 \title{Fit an Improvement Rate Model indirectly}
 \usage{
-\method{fit}{iMoMoI}(object, data = NULL, Dxt = NULL, Ext = NULL,
-  ages = NULL, years = NULL, ages.fit = NULL, years.fit = NULL,
-  wxt = NULL, start.ax = NULL, start.bx = NULL, start.kt = NULL,
-  start.b0x = NULL, start.gc = NULL, verbose = TRUE, ...)
+\method{fit}{iMoMoI}(
+  object,
+  data = NULL,
+  Dxt = NULL,
+  Ext = NULL,
+  ages = NULL,
+  years = NULL,
+  ages.fit = NULL,
+  years.fit = NULL,
+  wxt = NULL,
+  start.ax = NULL,
+  start.bx = NULL,
+  start.kt = NULL,
+  start.b0x = NULL,
+  start.gc = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{an object of class \code{"iMoMoI"} defining the improvement rate

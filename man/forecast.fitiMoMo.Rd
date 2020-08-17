@@ -4,10 +4,19 @@
 \alias{forecast.fitiMoMo}
 \title{Forecast mortality rates using an improvement rate Model}
 \usage{
-\method{forecast}{fitiMoMo}(object, h = 50, kt.order = c(1, 0, 0),
-  kt.include.constant = TRUE, kt.include.trend = FALSE,
-  gc.order = c(1, 0, 0), gc.include.constant = TRUE,
-  jumpRates = NULL, kt.lookback = NULL, gc.lookback = NULL, ...)
+\method{forecast}{fitiMoMo}(
+  object,
+  h = 50,
+  kt.order = c(1, 0, 0),
+  kt.include.constant = TRUE,
+  kt.include.trend = FALSE,
+  gc.order = c(1, 0, 0),
+  gc.include.constant = TRUE,
+  jumpRates = NULL,
+  kt.lookback = NULL,
+  gc.lookback = NULL,
+  ...
+)
 }
 \description{
 Forecast mortality rates using an improvement rate Model

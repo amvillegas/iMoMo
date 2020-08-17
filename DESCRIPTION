@@ -1,16 +1,19 @@
 Package: iMoMo
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0.9000
+Title: Mortality Improvement Rate Modelling
+Version: 0.2.0
 Author: Andres Villegas <andresmauriciovillegas@gmail.com>
 Maintainer: Andres Villegas <andresmauriciovillegas@gmail.com>
-Description: More about what it does (maybe more than one line)
+Description: Extension of the packack StMoMo to allow the modelling of mortality 
+             improvement rates under a Poisson setting.
+URL: http://github.com/amvillegas/iMoMo
+BugReports: http://github.com/amvillegas/iMoMo/issues
 Depends:
     R (>= 3.2.0),
-    StMoMo (>= 0.3.1)
+    StMoMo (>= 0.4.1)
 Imports:
     MASS,
     vars
 License: What license is it under?
 LazyData: TRUE
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

@@ -4,8 +4,20 @@
 \alias{plotParameterFan}
 \title{Plot fanchart of the parameters}
 \usage{
-plotParameterFan(x, y, yBoot, main, xlab, ylab, probs, fan.col, n.fan,
-  ylim = range(yBoot, finite = TRUE), new = TRUE, ...)
+plotParameterFan(
+  x,
+  y,
+  yBoot,
+  main,
+  xlab,
+  ylab,
+  probs,
+  fan.col,
+  n.fan,
+  ylim = range(yBoot, finite = TRUE),
+  new = TRUE,
+  ...
+)
 }
 \description{
 Plot fanchart of the parameters

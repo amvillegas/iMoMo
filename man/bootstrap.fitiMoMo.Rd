@@ -4,9 +4,13 @@
 \alias{bootstrap.fitiMoMo}
 \title{Bootstrap an Improvement Rate Mortality Model}
 \usage{
-\method{bootstrap}{fitiMoMo}(object, nBoot = 1,
-  type = c("semiparametric", "residual"), deathType = c("observed",
-  "fitted"), ...)
+\method{bootstrap}{fitiMoMo}(
+  object,
+  nBoot = 1,
+  type = c("semiparametric", "residual"),
+  deathType = c("observed", "fitted"),
+  ...
+)
 }
 \arguments{
 \item{object}{an object of class \code{"fitiMoMo"} with the fitted

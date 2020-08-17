@@ -5,11 +5,21 @@
 \title{Simulate future sample paths from a Bootstrapped Improvement
 Rate Model}
 \usage{
-\method{simulate}{bootiMoMo}(object, nsim = 1, seed = NULL, h = 50,
-  kt.order = c(1, 0, 0), kt.include.constant = TRUE,
-  kt.include.trend = FALSE, gc.order = c(1, 0, 0),
-  gc.include.constant = TRUE, jumpRates = NULL, kt.lookback = NULL,
-  gc.lookback = NULL, ...)
+\method{simulate}{bootiMoMo}(
+  object,
+  nsim = 1,
+  seed = NULL,
+  h = 50,
+  kt.order = c(1, 0, 0),
+  kt.include.constant = TRUE,
+  kt.include.trend = FALSE,
+  gc.order = c(1, 0, 0),
+  gc.include.constant = TRUE,
+  jumpRates = NULL,
+  kt.lookback = NULL,
+  gc.lookback = NULL,
+  ...
+)
 }
 \description{
 Simulate future sample paths from a Bootstrapped Improvement

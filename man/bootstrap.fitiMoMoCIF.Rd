@@ -5,9 +5,13 @@
 \title{Bootstrap an Improvement Rate Mortality Model of type fitted
 with constant improvement rates}
 \usage{
-\method{bootstrap}{fitiMoMoCIF}(object, nBoot = 1,
-  type = c("semiparametric", "residual"), deathType = c("observed",
-  "fitted"), ...)
+\method{bootstrap}{fitiMoMoCIF}(
+  object,
+  nBoot = 1,
+  type = c("semiparametric", "residual"),
+  deathType = c("observed", "fitted"),
+  ...
+)
 }
 \description{
 Bootstrap an Improvement Rate Mortality Model of type fitted

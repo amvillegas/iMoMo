@@ -4,8 +4,15 @@
 \alias{plotTwoModels}
 \title{Plot fitted parameters from two stochastic mortality model}
 \usage{
-plotTwoModels(x, y, nCol = 2, parametricbx = TRUE, type = "l",
-  legend = NULL, ...)
+plotTwoModels(
+  x,
+  y,
+  nCol = 2,
+  parametricbx = TRUE,
+  type = "l",
+  legend = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{an object of class \code{"fitStMoMo"} with the fitted

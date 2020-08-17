@@ -4,8 +4,7 @@
 \alias{simulate.simpleVAR2}
 \title{Simulate n.path of VAR from class simpleVAR}
 \usage{
-\method{simulate}{simpleVAR2}(object, nsim = 10, seed = NULL,
-  colnames = NULL)
+\method{simulate}{simpleVAR2}(object, nsim = 10, seed = NULL, colnames = NULL)
 }
 \description{
 ARGUMENT

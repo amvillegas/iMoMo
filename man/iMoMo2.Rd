@@ -4,11 +4,16 @@
 \alias{iMoMo2}
 \title{Create a new Improvement Rate Mortality Model}
 \usage{
-iMoMo2(staticAgeFun = TRUE, periodAgeFun = "NP", cohortAgeFun = NULL,
-  type = c("indirect", "direct"), constFun = function(ax, bx, kt, b0x,
-  gc, wxt, ages) list(ax = ax, bx = bx, kt = kt, b0x = b0x, gc = gc),
-  constFunEst = function(Ax, ax, bx, kt, b0x, gc, wxt, ages) list(Ax =
-  Ax, ax = ax, bx = bx, kt = kt, b0x = b0x, gc = gc))
+iMoMo2(
+  staticAgeFun = TRUE,
+  periodAgeFun = "NP",
+  cohortAgeFun = NULL,
+  type = c("indirect", "direct"),
+  constFun = function(ax, bx, kt, b0x, gc, wxt, ages) list(ax = ax, bx = bx, kt = kt,
+    b0x = b0x, gc = gc),
+  constFunEst = function(Ax, ax, bx, kt, b0x, gc, wxt, ages) list(Ax = Ax, ax = ax, bx
+    = bx, kt = kt, b0x = b0x, gc = gc)
+)
 }
 \arguments{
 \item{staticAgeFun}{logical value indicating if a static age function

@@ -4,8 +4,7 @@
 \alias{fitted.fitiMoMo}
 \title{Compute fitted values for an Improvement Rate Model}
 \usage{
-\method{fitted}{fitiMoMo}(object, type = c("improvements", "rates",
-  "deaths"), ...)
+\method{fitted}{fitiMoMo}(object, type = c("improvements", "rates", "deaths"), ...)
 }
 \description{
 Returns fitted values for the data used in Improvement Rate Stochastic
