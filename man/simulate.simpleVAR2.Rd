@@ -2,16 +2,21 @@
 % Please edit documentation in R/SimpleVAR2.r
 \name{simulate.simpleVAR2}
 \alias{simulate.simpleVAR2}
-\title{Simulate n.path of VAR from class simpleVAR}
+\title{Simulate a VAR model}
 \usage{
 \method{simulate}{simpleVAR2}(object, nsim = 10, seed = NULL, colnames = NULL)
 }
-\description{
-ARGUMENT
+\arguments{
+\item{nsim}{number of periods for the simulated series.}
+
+\item{seed}{either \code{NULL} or an integer that will be used in a
+call to \code{\link{set.seed}} before simulating the time series.
+The default, \code{NULL} will not change the random generator state.}
+
+\item{colnames}{Name of the columns (time periods)}
+
+\item{object:}{An object of class \code{"simpleVAR2"}.}
 }
-\details{
-object: An object of class "ets", "Arima" or "ar".
-n.ahead: Number of periods for the simulated series
-n.path: Number of paths to be simulated
-colnames: Name of the columns (time periods)
+\description{
+Returns one simulated path of the VAR model in \code{object}.
 }
