@@ -4,7 +4,7 @@
 #' These residuals can be plotted using \code{\link[StMoMo]{plot.resStMoMo}}.
 #'
 #' @param object an object of class \code{"fitiMoMo"} with the fitted
-#' parameters of an improvment mortality model.
+#' parameters of an improvement mortality model.
 #' @param scale logical indicating whether the residuals should be scaled
 #' or not by dividing the deviance by the  overdispersion of the model.
 #' Default is \code{TRUE}.

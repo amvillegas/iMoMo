@@ -1,25 +1,13 @@
-#******************************************************************************************
-# Filename: SimpleVAR.r
-# Programmer: Andres Villegas
-#             andresmauriciovillegas@gmail.com
-#             Andres.Villegas.1@cass.city.ac.uk
-#             Andres.Villegas@hymans.co.uk
-# Date created: 13/03/2014
-#
-# Description: Class for estimating, projecting and simulating Vector Auto Regressive models
-#
-#
-#******************************************************************************************
-
-#------------------------------------------------------------------------------------------
-#                                 ESTIMATION
-#------------------------------------------------------------------------------------------
-
 #' Simple VAR estimation
 #'
-#' y: a matrix containing the multivariate timeseries
-#' p: Integer for the lag order (default is p=1)
-#' d: Degree of differencing (default is d=0)
+#' Function to fit VAR mole of the form:
+#' \deqn{\Delta^d y_t = C + \sum_{i=1}^p A_i \Delta^d y_{t-i} + \epsilon_t}
+#' where \eqn{C} is a \eqn{K}-dimensional vector of parameters and
+#' \eqn{A_1,...,A_p} are \eqn{K\times K} matrices of autoregressive parampeters.
+#'
+#' @param y a matrix containing the multivariate timeseries
+#' @param p Integer for the lag order (default is p=1)
+#' @param d Degree of differencing (default is d=0)
 #' @export
 simpleVAR <- function(y,p=1,d=0){
   if(is.array(y)){
@@ -42,7 +30,7 @@ simpleVAR <- function(y,p=1,d=0){
   }
 
   #fit the time series model
-  fittingModel <- ar.ols(dy,aic=F,order.max=p,demean=F,intercept=T)
+  fittingModel <- ar.ols(dy,aic=F,order.max=p,demean=FALSE,intercept=TRUE)
 
   #prepare the output
   A <- NULL
@@ -58,18 +46,16 @@ simpleVAR <- function(y,p=1,d=0){
 
 }
 
-#------------------------------------------------------------------------------------------
-#                                 FORECAST
-#------------------------------------------------------------------------------------------
-
 #' Forecast a VAR from class simpleVAR
 #'
+#' Forecast a VAR from class simpleVAR
 #'
-#'  ARGUMENT
+#' @param object An object of class \code{"simpleVAR"}.
+#' @param h Number of periods for the simulated series
+#' @param colnames Name of the columns (time periods)
 #'
-#' object: An object of class "ets", "Arima" or "ar".
-#' n.ahead: Number of periods for the simulated series
-#' colnames: Name of the columns (time periods)
+#' @return A matrix with the forecast series
+#'
 #' @export
 forecast.simpleVAR <- function(object, h = 10, colnames=NULL){
   n.ahead <- h
@@ -112,18 +98,16 @@ forecast.simpleVAR <- function(object, h = 10, colnames=NULL){
   yt_for
 }
 
-#------------------------------------------------------------------------------------------
-#                                 SIMULATE
-#------------------------------------------------------------------------------------------
-#' Simulate n.path of VAR from class simpleVAR
+#' Simulate a VAR model
 #'
+#' Returns one simulated path of the VAR model in \code{object}.
 #'
-#'  ARGUMENT
-#'
-#' object: An object of class "ets", "Arima" or "ar".
-#' n.ahead: Number of periods for the simulated series
-#' n.path: Number of paths to be simulated
-#' colnames: Name of the columns (time periods)
+#' @param object: An object of class \code{"simpleVAR1"}.
+#' @param nsim number of periods for the simulated series.
+#' @param seed either \code{NULL} or an integer that will be used in a
+#' call to \code{\link{set.seed}} before simulating the time series.
+#' The default, \code{NULL} will not change the random generator state.
+#' @param colnames Name of the columns (time periods)
 #' @export
 simulate.simpleVAR <- function(object, nsim = 10, seed = NULL, colnames=NULL){
   n.path <- 1
@@ -133,43 +117,39 @@ simulate.simpleVAR <- function(object, nsim = 10, seed = NULL, colnames=NULL){
   p <- object$p
   K <- object$K
   d <- object$d
-  onePathSim<-function(k){
-    #generate innovations
-    u <- mvrnorm(n=n.ahead,mu=rep(0,object$K),Sigma=object$Sigma)
 
-    #generate the differenced series
-    dyt_sim <- array(0,dim=dim(u))
-    dy_t <-  tail(object$dy,object$p)
-    for (t in 1:n.ahead){
-      dyt_sim[t,] <- C + u[t,]
-      i <- 1
-      while(i<=p){
-        dyt_sim[t,] <- dyt_sim[t,] + t(A[[i]]%*%array(dy_t[p+1-i,],dim=c(K,1)))
-        i<-i+1
-      }
-      i <- 1
-      while(i<p){
-        dy_t[i,] <- dy_t[i+1,]
-        i<-i+1
-      }
-      dy_t[p,]<-dyt_sim[t,]
+  #generate innovations
+  u <- mvrnorm(n=n.ahead,mu=rep(0,object$K),Sigma=object$Sigma)
 
+  #generate the differenced series
+  dyt_sim <- array(0,dim=dim(u))
+  dy_t <-  tail(object$dy,object$p)
+  for (t in 1:n.ahead){
+    dyt_sim[t,] <- C + u[t,]
+    i <- 1
+    while(i<=p){
+      dyt_sim[t,] <- dyt_sim[t,] + t(A[[i]]%*%array(dy_t[p+1-i,],dim=c(K,1)))
+      i<-i+1
     }
-    #undifference the data
-    j <- d
-    yt_sim<-dyt_sim
-    while(j>0){
-        yt_t_1 <- tail(object$datamat[[j]],1)
-        for(t in 1:n.ahead){
-          yt_sim[t,] <- yt_sim[t,] + yt_t_1
-          yt_t_1 <- yt_sim[t,]
-        }
-        j<-j-1
+    i <- 1
+    while(i<p){
+      dy_t[i,] <- dy_t[i+1,]
+      i<-i+1
     }
-    dimnames(yt_sim) <- list(colnames)
-    yt_sim
+    dy_t[p,]<-dyt_sim[t,]
+
   }
-  #run for all the simulations
-  onePathSim()
-
+  #undifference the data
+  j <- d
+  yt_sim<-dyt_sim
+  while(j>0){
+      yt_t_1 <- tail(object$datamat[[j]],1)
+      for(t in 1:n.ahead){
+        yt_sim[t,] <- yt_sim[t,] + yt_t_1
+        yt_t_1 <- yt_sim[t,]
+      }
+      j<-j-1
+  }
+  dimnames(yt_sim) <- list(colnames)
+  yt_sim
 }

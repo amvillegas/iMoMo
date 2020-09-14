@@ -6,8 +6,37 @@
 \usage{
 simpleVAR2(y, p = 1, d = 0, type = c("const", "trend", "both", "none"))
 }
+\arguments{
+\item{y}{a matrix containing the multivariate timeseries}
+
+\item{p}{integer for the lag order (default is \code{p=1})}
+
+\item{d}{degree of differencing (default is \code{d=0})}
+
+\item{type}{string indicating whether a constand a trend are included. If
+\code{"const"} only \eqn{C} is included. If \code{"trend"} only \eqn{D} is
+included.  If \code{"both"} both \eqn{C} and \eqn{D} are included.}
+}
+\value{
+A list of class \code{"simpleVAR2"} with components:
+
+\item{K}{Dimension of the vector \eqn{y}. \code{K=1} if univariate}
+\item{A}{A 3-dimensional array with the vector autregressive matrices, \eqn{A_1,...,A_p}.}
+\item{C}{Vector of constant parameters.}
+\item{D}{Vector of trend parametesr.}
+\item{p}{Integer indicating the lag order.}
+\item{d}{Degree of differencing.}
+\item{n}{number of time periods used in the fitting.}
+\item{Sigma}{Variance-covariance matrix.}
+\item{resid}{Residuals of the model.}
+\item{fittingModel}{Output of the model call underlying the fitting.}
+\item{y}{Data used in the fitting}
+\item{dy}{Difference data used in the fitting}
+\item{datamat}{Array including all hte lags used in fitting the model.}
+}
 \description{
-y: a matrix containing the multivariate timeseries
-p: Integer for the lag order (default is p=1)
-d: Degree of differencing (default is d=0)
+Function to fit VAR mole of the form:
+\deqn{\Delta^d y_t = C+Dt+\sum_{i=1}^p A_i \Delta^d y_{t-i} + \epsilon_t}
+where \eqn{C} and  \eqn{D} are \eqn{K}-dimensional vectors for parameters and
+\eqn{A_1,...,A_p} are \eqn{K\times K} matrices of autoregressive parampeters.
 }

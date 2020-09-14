@@ -1,7 +1,7 @@
 Package: iMoMo
 Type: Package
 Title: Mortality Improvement Rate Modelling
-Version: 0.2.0
+Version: 0.2.0.9000
 Author: Andres Villegas <andresmauriciovillegas@gmail.com>
 Maintainer: Andres Villegas <andresmauriciovillegas@gmail.com>
 Description: Extension of the packack StMoMo to allow the modelling of mortality 

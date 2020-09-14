@@ -1,6 +1,46 @@
-
 #' Simulate future sample paths from a Bootstrapped Improvement
 #' Rate Model
+#'
+#' Simulate mortaility improvment rates and mortality rates using
+#' the a bootstrapped a mortality improvement rate model.
+#' The period indexes are \eqn{\kappa_t^{(i)}, i = 1,..N,} are forecasted
+#' using integrated vector autoregressive model. The cohort index
+#' \eqn{\gamma_{t-x}} is forecasted using an ARIMA\eqn{(p, d, q)}.
+#' By default an ARIMA\eqn{(1, 1, 0)} with a constant is used.
+#'
+#' @param object an object of class \code{"bootiMoMo"} with the bootstrapped
+#' parameters of an improvement rate model.
+#' @param nsim number of sample paths to simulate from each bootstrapped
+#' sample. Thus if there are \code{nBoot} bootstrapped samples the total
+#' number of paths will be \code{nsim * nBoot}.
+#' @inheritParams simulate.simpleVAR2
+#' @inheritParams forecast.fitiMoMo
+#'
+#' @return A list of class \code{"simiMoMo"} with components:
+#'
+#' \item{improvements}{a three dimensional array with the future simulated improvement rates.}
+#' \item{rates}{a three dimensional array with the future simulated mortality rates.}
+#' \item{ages}{vector of ages corresponding to the first dimension of \code{improvements}.}
+#' \item{years}{vector of years for which a forecast has been produced. This
+#'  corresponds to the second dimension of \code{improvements}.}#'
+#' \item{kt.s}{ information on the simulated paths of the period indexes of the model.
+#' This is a list with the \code{model} fitted to \eqn{\kappa_t}; the simulated paths
+#' \code{sim}; and the \code{years} for which a forecast was produced. If the
+#' model does not have any age-period terms (i.e. \eqn{N=0}) this is set to
+#' \code{NULL}.}
+#' \item{gc.s}{ information on the simulated paths of the cohort index of
+#' the model. This is a list with the \code{model} fitted to \eqn{\gamma_c};
+#' the simulated paths (\code{sim}); and the \code{cohorts} for which
+#' simulations were produced. If the mortality model does not have a cohort
+#' effect this is set to \code{NULL}.}
+#' \item{fittedImprovements}{ a three dimensional array with the in-sample
+#' improvements of the model for the years for which the improvement rate model
+#' was fitted.}
+#'
+#' @details
+#' For further details see \code{\link{simulate.fitiMoMo}}.
+#'
+#' @seealso \code{\link{bootstrap.fitiMoMo}}, \code{\link{simulate.fitiMoMo}}
 #'
 #' @export
 simulate.bootiMoMo <-function(object, nsim = 1, seed = NULL, h = 50,

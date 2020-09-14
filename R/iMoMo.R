@@ -1,54 +1,96 @@
-#' Create a new Imprvement Rate Mortality Model
+#' Create a new Improvement Rate Mortality Model
+#'
+#' Initialises an iMoMo oject which represents a generalised
+#' Age-Period-Cohort improvement rate mortality model
+#'
+#' @param staticAgeFun logical value indicating if a static age function
+#'   \eqn{\alpha_x} is to be included.
+#'
+#' @param periodAgeFun  a list of length \eqn{N} with the definitions of the
+#'   period age modulating parameters \eqn{\beta_x^{(i)}}. Each entry can take
+#'   values: \code{"NP"} for non-parametric age terms, \code{"1"} for
+#'   \eqn{\beta_x^{(i)}=1} or a predefined parametric function of
+#'   age (see details). Set this to \code{NULL} if there are no period terms
+#'   in the model.
+#'
+#' @param cohortAgeFun defines the cohort age modulating parameter
+#'   \eqn{\beta_x^{(0)}}. It can take values: \code{"NP"} for non-parametric
+#'   age terms, \code{"1"} for \eqn{\beta_x^{(0)}=1}, a predefined parametric
+#'   function of age (see details) or \code{NULL} if there is no cohort effect.
+#'
+#' @param type defines the type of estimation method to be used.
+#'   \code{"indirect"} would estimate the equivalent mortality rate model
+#'   and the transform the model into improvement rates. \code{"direct"}
+#'   would estimate the model directly on the improvement rate model.
+#'
+#' @param  constFun function defining the identifiability constraints of the
+#'   model. It must be a function of the form
+#'   \code{constFun <- function(ax, bx, kt, b0x, gc, wxt, ages)} taking a set
+#'   of fitted model parameters and returning a list
+#'   \code{list(ax = ax, bx = bx, kt = kt, b0x = b0x, gc = gc)}
+#'   of the model parameters with the identifiability constraints applied. If
+#'   omitted no identifiability constraints are applied to the model.
+#'
+#' @param  constFunEst function defining the identifiability constraints for the
+#'   equivalent mortality rate model. It must be a function of the form
+#'   \code{constFunEst <- function(Ax, ax, bx, kt, b0x, gc, wxt, ages)} taking a set
+#'   of fitted model parameters and returning a list
+#'   \code{list(Ax = Ax, ax = ax, bx = bx, kt = kt, b0x = b0x, gc = gc)}
+#'   of the model parameters with the identifiability constraints applied. If
+#'   omitted no identifiability constraints are applied to the estimaion model.
+#'
 #' @export
-iMoMo  <- function(model, type = c("observed", "fitted")) {
+iMoMo  <- function(staticAgeFun = TRUE, periodAgeFun = 'NP',
+                    cohortAgeFun = NULL, type = c("indirect", "direct"),
+                    constFun = function(ax, bx, kt, b0x, gc, wxt, ages)
+                      list(ax = ax, bx = bx, kt = kt, b0x = b0x, gc = gc),
+                    constFunEst = function(Ax, ax, bx, kt, b0x, gc, wxt, ages)
+                      list(Ax = Ax, ax = ax, bx = bx, kt = kt, b0x = b0x, gc = gc)) {
 
-  #---------------------------------------------------------------------
-  # Check inputs
-  #---------------------------------------------------------------------
   type <- match.arg(type)
-  if (sum("StMoMo" %in% class(model)) == 0) {
-    stop("The model argument needs to be of class StMoMo")
-  }
-  if (model$link != "log")
-    stop("The base StMoMo model needs to use a log link")
-  if (type == "fitted" && model$staticAgeFun == FALSE) {
-    stop("For models of type fitted the StMoMo model needs
-         to include an static age function")
+  #Create estimation model
+  model <- StMoMo(link = "log",
+                  staticAgeFun = ifelse(type == "indirect", TRUE, staticAgeFun),
+                  periodAgeFun = periodAgeFun, cohortAgeFun = cohortAgeFun)
+
+  #Add constant improvement rates if necessary
+  if (type == "indirect" && staticAgeFun){
+    model$gnmFormula <- paste(model$gnmFormula, "factor(x):t", sep = " + ")
   }
 
-  #---------------------------------------------------------------------
-  # Check inputs
-  #---------------------------------------------------------------------
-  model$type = type
-  if (type == "fitted")
-    class(model) <-  c("iMoMo", "iMoMoF", class(model))
+
+  #Structure of the model is the same but on improvement rates
+  textFormula <- sub("log m\\[x,t\\]", "eta\\[x,t\\]", model$textFormula)
+  if (!staticAgeFun)
+    textFormula <- sub("a\\[x\\] \\+ ", "", textFormula)
+
+
+  out <- list(staticAgeFun = staticAgeFun,
+              periodAgeFun = model$periodAgeFun,
+              cohortAgeFun = model$cohortAgeFun,
+              N = model$N,
+              textFormula = textFormula,
+              type = type,
+              constFun = constFun,
+              constFunEst = constFunEst,
+              model = model)
+
+
+  #Estimation type
+  if (type == "indirect")
+    class(out) <-  c("iMoMo", "iMoMoI", "StMoMo")
   else
-    class(model) <-  c("iMoMo", "iMoMoO", class(model))
-  model
+    class(out) <-  c("iMoMo", "iMoMoD", "StMoMo")
+  out
+
 }
 
-#' Create a new Imprvement Rate Mortality Model of tiyp fitted
+
 #' @export
-iMoMoCIF  <- function(model, constFun = function(ax, dx, bx, kt, b0x, gc, wxt, ages)
-  list(ax = ax, dx = dx, bx = bx, kt = kt, b0x = b0x, gc = gc)) {
-  model$type = "fitted"
-  #---------------------------------------------------------------------
-  # Check inputs
-  #---------------------------------------------------------------------
-  if (sum("StMoMo" %in% class(model)) == 0) {
-    stop("The model argument needs to be of class StMoMo")
-  }
-  if (model$link != "log")
-    stop("The base StMoMo model needs to use a log link")
-  if (model$staticAgeFun == FALSE) {
-    stop("For models of type fitted the StMoMo model needs
-         to include an static age function")
-  }
-  model$gnmFormula <- paste(model$gnmFormula, "factor(x):t", sep = " + ")
-  model$constFun2 <- model$constFun
-  model$constFun3 <- constFun
-  model$constFun <- function(ax, bx, kt, b0x, gc, wxt, ages)
-    list(ax = ax, bx = bx, kt = kt, b0x = b0x, gc = gc)
-  class(model) <-  c("iMoMo", "iMoMoCIF", "iMoMoF", class(model))
-  model
+print.iMoMo <- function(x, ...) {
+  cat(paste(x$type, "model with predictor: "))
+  cat("")
+  cat(x$textFormula)
 }
+
+

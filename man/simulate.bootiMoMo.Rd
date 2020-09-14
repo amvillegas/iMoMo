@@ -21,7 +21,88 @@ Rate Model}
   ...
 )
 }
+\arguments{
+\item{object}{an object of class \code{"bootiMoMo"} with the bootstrapped
+parameters of an improvement rate model.}
+
+\item{nsim}{number of sample paths to simulate from each bootstrapped
+sample. Thus if there are \code{nBoot} bootstrapped samples the total
+number of paths will be \code{nsim * nBoot}.}
+
+\item{seed}{either \code{NULL} or an integer that will be used in a
+call to \code{\link{set.seed}} before simulating the time series.
+The default, \code{NULL} will not change the random generator state.}
+
+\item{h}{number of years ahead to forecast.}
+
+\item{kt.order}{an optional vector indicating the order of
+autorregression and of differetiation of the VARI model. The two
+components \eqn{(p, d)} are the AR order and the degree of  differencing.}
+
+\item{kt.include.constant}{a logical value indicating if the VARI model
+should include a constant value. The default is \code{TRUE}.}
+
+\item{kt.include.trend}{a logical value indicating if the VARI model
+should have a linear trend. The default is \code{FALSE}.}
+
+\item{gc.order}{a specification of the ARIMA model for the cohort effect:
+the three components \eqn{(p, d, q)} are the AR order, the degree of
+differencing, and the MA. The default is an ARIMA\eqn{(1, 0, 0)}.}
+
+\item{gc.include.constant}{a logical value indicating if the ARIMA model
+should include a constant value. The default is \code{TRUE}.}
+
+\item{jumpRates}{optional vector of moratlity rates for the last year used as starting rates.
+for the projection. If it is not provided the rates from the  the actual rates from
+the final year are used.}
+
+\item{kt.lookback}{optional argument to specify the look-back window to use
+in the estimation of the time series model for the period indexes. By
+default all the estimated values are used. If
+\code{kt.lookback} is provided then the last \code{kt.lookback}
+years of \eqn{\kappa_t^{(i)}, i = 1,..N,} are used.}
+
+\item{gc.lookback}{optional argument to specify the look-back window to use
+in the estimation of the ARIMA model for the cohort effect. By
+default all the estimated values are used in estimating the ARIMA
+model. If \code{gc.lookback} is provided then the last
+\code{gc.lookback} years of \eqn{\gamma_{t-x}} are used.}
+
+\item{...}{other arguments.}
+}
+\value{
+A list of class \code{"simiMoMo"} with components:
+
+\item{improvements}{a three dimensional array with the future simulated improvement rates.}
+\item{rates}{a three dimensional array with the future simulated mortality rates.}
+\item{ages}{vector of ages corresponding to the first dimension of \code{improvements}.}
+\item{years}{vector of years for which a forecast has been produced. This
+ corresponds to the second dimension of \code{improvements}.}#'
+\item{kt.s}{ information on the simulated paths of the period indexes of the model.
+This is a list with the \code{model} fitted to \eqn{\kappa_t}; the simulated paths
+\code{sim}; and the \code{years} for which a forecast was produced. If the
+model does not have any age-period terms (i.e. \eqn{N=0}) this is set to
+\code{NULL}.}
+\item{gc.s}{ information on the simulated paths of the cohort index of
+the model. This is a list with the \code{model} fitted to \eqn{\gamma_c};
+the simulated paths (\code{sim}); and the \code{cohorts} for which
+simulations were produced. If the mortality model does not have a cohort
+effect this is set to \code{NULL}.}
+\item{fittedImprovements}{ a three dimensional array with the in-sample
+improvements of the model for the years for which the improvement rate model
+was fitted.}
+}
 \description{
-Simulate future sample paths from a Bootstrapped Improvement
-Rate Model
+Simulate mortaility improvment rates and mortality rates using
+the a bootstrapped a mortality improvement rate model.
+The period indexes are \eqn{\kappa_t^{(i)}, i = 1,..N,} are forecasted
+using integrated vector autoregressive model. The cohort index
+\eqn{\gamma_{t-x}} is forecasted using an ARIMA\eqn{(p, d, q)}.
+By default an ARIMA\eqn{(1, 1, 0)} with a constant is used.
+}
+\details{
+For further details see \code{\link{simulate.fitiMoMo}}.
+}
+\seealso{
+\code{\link{bootstrap.fitiMoMo}}, \code{\link{simulate.fitiMoMo}}
 }

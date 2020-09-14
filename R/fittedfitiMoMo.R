@@ -1,10 +1,18 @@
 #' Compute fitted values for an Improvement Rate Model
 #'
-#' Returns fitted values for the data used in Improvement Rate Stochastic
-#' Mortality Model.
+#' Returns fitted values for the data used in fitting the
+#' Improvement Rate Stochastic  Mortality Model.
+#'
+#' @param object an object of class \code{"fitiMoMo"} with the fitted
+#' parameters of an improvment rate  model.
+#' @param type the type of the fitted values that should be returned. The
+#' alternatives are \code{"improvementes"}(default), \code{"rates"}, and
+#' \code{"deaths"}.
+#'
+#' @return A matrix with the fitted values.
 #'
 #' @export
-fitted.fitiMoMo<-function(object, type = c("improvements", "rates", "deaths"), ...) {
+fitted.fitiMoMo <- function(object, type = c("improvements", "rates", "deaths"), ...) {
 
   type <- match.arg(type)
   improvements <- with(object, StMoMo:::predictLink(ax = ax, bx = bx, kt = kt, b0x = b0x,

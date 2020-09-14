@@ -6,7 +6,18 @@
 \usage{
 \method{fitted}{fitiMoMo}(object, type = c("improvements", "rates", "deaths"), ...)
 }
+\arguments{
+\item{object}{an object of class \code{"fitiMoMo"} with the fitted
+parameters of an improvment rate  model.}
+
+\item{type}{the type of the fitted values that should be returned. The
+alternatives are \code{"improvementes"}(default), \code{"rates"}, and
+\code{"deaths"}.}
+}
+\value{
+A matrix with the fitted values.
+}
 \description{
-Returns fitted values for the data used in Improvement Rate Stochastic
-Mortality Model.
+Returns fitted values for the data used in fitting the
+Improvement Rate Stochastic  Mortality Model.
 }

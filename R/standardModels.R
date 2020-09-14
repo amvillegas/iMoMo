@@ -11,7 +11,7 @@
 #' \deqn{\sum_x\beta_x = X.}
 #' where \eqn{X}  is the number of ages in the data
 #'
-#' @inheritParams iMoMo2
+#' @inheritParams iMoMo
 #' @param const defines the constraint to impose to the period index of the
 #'  model to ensure identifiability. The alternatives are
 #'  \code{"sum"}(default),  \code{"last"} and \code{"first"} which apply
@@ -20,7 +20,7 @@
 #'
 #' @return An object of class \code{"StMoMo"}.
 #'
-#' @seealso \code{\link{iMoMo2}}
+#' @seealso \code{\link{iMoMo}}
 #'
 #' @export
 lci <- function(type = c("indirect", "direct"), const = c("sum", "last", "first")) {
@@ -37,26 +37,26 @@ lci <- function(type = c("indirect", "direct"), const = c("sum", "last", "first"
     kt[1, ] <- kt[1, ] * c2 / N
     list(ax = ax, bx = bx, kt = kt, b0x = b0x, gc = gc)
   }
-  iMoMo2(staticAgeFun = TRUE, periodAgeFun = 'NP', type = type,
+  iMoMo(staticAgeFun = TRUE, periodAgeFun = 'NP', type = type,
          constFun = constLC)
 }
 
 
 #' Create a Cairns-Blake-Dowd model for improvement rates
 #'
-#' @inheritParams iMoMo2
+#' @inheritParams iMoMo
 #'
 #' @export
 cbdi <- function(type = c("indirect", "direct")) {
   type <- match.arg(type)
   f1 <- function(x,ages) x - mean(ages)
-  iMoMo2(type = type, staticAgeFun = FALSE, periodAgeFun=c("1", f1))
+  iMoMo(type = type, staticAgeFun = FALSE, periodAgeFun=c("1", f1))
 }
 
 
 #' Create an Age-Period-Cohort model for improvement rates
 #'
-#' @inheritParams iMoMo2
+#' @inheritParams iMoMo
 #'
 #' @export
 apci <- function(type = c("indirect", "direct")) {
@@ -78,6 +78,6 @@ apci <- function(type = c("indirect", "direct")) {
     ax <- ax + c1
     list(ax = ax, bx = bx, kt = kt, b0x = b0x, gc = gc)
   }
-  iMoMo2(type = type, staticAgeFun = TRUE, periodAgeFun = "1",
+  iMoMo(type = type, staticAgeFun = TRUE, periodAgeFun = "1",
          cohortAgeFun = "1", constFun = constAPC)
 }

@@ -2,15 +2,20 @@
 % Please edit documentation in R/SimpleVAR2.r
 \name{forecast.simpleVAR2}
 \alias{forecast.simpleVAR2}
-\title{Forecast a VAR from class simpleVAR}
+\title{Forecast a VAR from class simpleVAR2}
 \usage{
 \method{forecast}{simpleVAR2}(object, h = 10, colnames = NULL)
 }
-\description{
-ARGUMENT
+\arguments{
+\item{object}{An object of class \code{"simpleVAR2."}.}
+
+\item{h}{Number of periods for the forecasted series}
+
+\item{colnames}{Name of the columns (time periods)}
 }
-\details{
-object: An object of class "ets", "Arima" or "ar".
-n.ahead: Number of periods for the simulated series
-colnames: Name of the columns (time periods)
+\value{
+A matrix with the forecast series
+}
+\description{
+Function for obtaininng forcast of a VAR model
 }

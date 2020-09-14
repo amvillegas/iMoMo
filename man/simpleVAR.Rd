@@ -6,8 +6,16 @@
 \usage{
 simpleVAR(y, p = 1, d = 0)
 }
+\arguments{
+\item{y}{a matrix containing the multivariate timeseries}
+
+\item{p}{Integer for the lag order (default is p=1)}
+
+\item{d}{Degree of differencing (default is d=0)}
+}
 \description{
-y: a matrix containing the multivariate timeseries
-p: Integer for the lag order (default is p=1)
-d: Degree of differencing (default is d=0)
+Function to fit VAR mole of the form:
+\deqn{\Delta^d y_t = C + \sum_{i=1}^p A_i \Delta^d y_{t-i} + \epsilon_t}
+where \eqn{C} is a \eqn{K}-dimensional vector of parameters and
+\eqn{A_1,...,A_p} are \eqn{K\times K} matrices of autoregressive parampeters.
 }

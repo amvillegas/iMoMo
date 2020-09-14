@@ -9,7 +9,7 @@
   nsim = 1000,
   seed = NULL,
   h = 50,
-  kt.order = c(1, 0, 0),
+  kt.order = c(1, 0),
   kt.include.constant = TRUE,
   kt.include.trend = FALSE,
   gc.order = c(1, 0, 0),
@@ -20,6 +20,100 @@
   ...
 )
 }
+\arguments{
+\item{object}{an object of class \code{"fitiMoMo"} with the fitted
+parameters of an improvement rate mortality model.}
+
+\item{nsim}{number of sample paths to simulate.}
+
+\item{seed}{either \code{NULL} or an integer that will be used in a
+call to \code{\link{set.seed}} before simulating the time series.
+The default, \code{NULL} will not change the random generator state.}
+
+\item{h}{number of years ahead to forecast.}
+
+\item{kt.order}{an optional vector indicating the order of
+autorregression and of differetiation of the VARI model. The two
+components \eqn{(p, d)} are the AR order and the degree of  differencing.}
+
+\item{kt.include.constant}{a logical value indicating if the VARI model
+should include a constant value. The default is \code{TRUE}.}
+
+\item{kt.include.trend}{a logical value indicating if the VARI model
+should have a linear trend. The default is \code{FALSE}.}
+
+\item{gc.order}{a specification of the ARIMA model for the cohort effect:
+the three components \eqn{(p, d, q)} are the AR order, the degree of
+differencing, and the MA. The default is an ARIMA\eqn{(1, 0, 0)}.}
+
+\item{gc.include.constant}{a logical value indicating if the ARIMA model
+should include a constant value. The default is \code{TRUE}.}
+
+\item{jumpRates}{optional vector of moratlity rates for the last year used as starting rates.
+for the projection. If it is not provided the rates from the  the actual rates from
+the final year are used.}
+
+\item{kt.lookback}{optional argument to specify the look-back window to use
+in the estimation of the time series model for the period indexes. By
+default all the estimated values are used. If
+\code{kt.lookback} is provided then the last \code{kt.lookback}
+years of \eqn{\kappa_t^{(i)}, i = 1,..N,} are used.}
+
+\item{gc.lookback}{optional argument to specify the look-back window to use
+in the estimation of the ARIMA model for the cohort effect. By
+default all the estimated values are used in estimating the ARIMA
+model. If \code{gc.lookback} is provided then the last
+\code{gc.lookback} years of \eqn{\gamma_{t-x}} are used.}
+
+\item{...}{other arguments.}
+}
+\value{
+A list of class \code{"simiMoMo"} with components:
+
+\item{improvements}{a three dimensional array with the future simulated improvement rates.}
+\item{rates}{a three dimensional array with the future simulated mortality rates.}
+\item{ages}{vector of ages corresponding to the first dimension of \code{improvements}.}
+\item{years}{vector of years for which a forecast has been produced. This
+ corresponds to the second dimension of \code{improvements}.}#'
+\item{kt.s}{ information on the simulated paths of the period indexes of the model.
+This is a list with the \code{model} fitted to \eqn{\kappa_t}; the simulated paths
+\code{sim}; and the \code{years} for which a forecast was produced. If the
+model does not have any age-period terms (i.e. \eqn{N=0}) this is set to
+\code{NULL}.}
+\item{gc.s}{ information on the simulated paths of the cohort index of
+the model. This is a list with the \code{model} fitted to \eqn{\gamma_c};
+the simulated paths (\code{sim}); and the \code{cohorts} for which
+simulations were produced. If the mortality model does not have a cohort
+effect this is set to \code{NULL}.}
+\item{fittedImprovements}{ a three dimensional array with the in-sample
+improvements of the model for the years for which the improvement rate model
+was fitted.}
+}
 \description{
-Simulate future sample paths from an improvement  Model
+Simulate mortaility improvment rates and mortality rates using
+the fit from a mortality improvement rate model.
+The period indexes are \eqn{\kappa_t^{(i)}, i = 1,..N,} are forecasted
+using integrated vector autoregressive model. The cohort index
+\eqn{\gamma_{t-x}} is forecasted using an ARIMA\eqn{(p, d, q)}.
+By default an ARIMA\eqn{(1, 1, 0)} with a constant is used.
+}
+\details{
+The modelling of the period indexes \eqn{kappa_t} is done using a integrated vector
+autoregressive model of differencing order \eqn{d} and autorregressive order \eqn{p}:
+
+\deqn{\Delta^d k_t = C+Dt+\sum_{i=1}^p A_i \Delta^d k_{t-i} + \epsilon_t}
+
+where \eqn{C} and  \eqn{D} are \eqn{N}-dimensional vectors for parameters and
+\eqn{A_1,...,A_p} are \eqn{N\times N} matrices of autoregressive parampeters.
+If \code{kt.include.constant} is \code{TRUE} then \eqn{C} is included in the
+equation. Similarly, if \code{kt.include.trend} is \code{TRUE} then \eqn{D}
+is included in the equation.
+
+Fitting and simulating of the VAR model is done using the fucntion
+\code{\link{simpleVAR2}}.
+
+Fitting and simulating of the ARIMA model for the cohort index
+is done with function \code{\link[forecast]{Arima}} from package
+\pkg{forecast}. See the latter function for further details on
+input arguments \code{gc.order} and \code{gc.include.constant}.
 }

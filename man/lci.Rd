@@ -35,5 +35,5 @@ depending on the value of \code{const}, and
 where \eqn{X}  is the number of ages in the data
 }
 \seealso{
-\code{\link{iMoMo2}}
+\code{\link{iMoMo}}
 }

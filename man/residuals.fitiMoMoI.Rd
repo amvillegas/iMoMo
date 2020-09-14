@@ -8,7 +8,7 @@
 }
 \arguments{
 \item{object}{an object of class \code{"fitiMoMo"} with the fitted
-parameters of an improvment mortality model.}
+parameters of an improvement mortality model.}
 
 \item{scale}{logical indicating whether the residuals should be scaled
 or not by dividing the deviance by the  overdispersion of the model.

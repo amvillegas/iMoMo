@@ -6,11 +6,16 @@
 \usage{
 \method{forecast}{simpleVAR}(object, h = 10, colnames = NULL)
 }
-\description{
-ARGUMENT
+\arguments{
+\item{object}{An object of class \code{"simpleVAR"}.}
+
+\item{h}{Number of periods for the simulated series}
+
+\item{colnames}{Name of the columns (time periods)}
 }
-\details{
-object: An object of class "ets", "Arima" or "ar".
-n.ahead: Number of periods for the simulated series
-colnames: Name of the columns (time periods)
+\value{
+A matrix with the forecast series
+}
+\description{
+Forecast a VAR from class simpleVAR
 }

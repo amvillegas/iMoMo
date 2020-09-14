@@ -1,26 +1,33 @@
-#******************************************************************************************
-# Filename: SimpleVAR2.r
-# Programmer: Andres Villegas
-#             andresmauriciovillegas@gmail.com
-#             Andres.Villegas.1@cass.city.ac.uk
-#             Andres.Villegas@hymans.co.uk
-# Date created: 13/03/2014
-# Modification list:
-#            - 30/07/2014: Code updated to allow for linear trends
-#
-# Description: Class for estimating, projecting and simulating Vector Auto Regressive models
-#
-#              Delta^d y_t = C+Dt+\sum_{i=1}^p A_i Delta^d y_{t-i} + e_t
-#******************************************************************************************
-
-#------------------------------------------------------------------------------------------
-#                                 ESTIMATION
-#------------------------------------------------------------------------------------------
 #' Simple VAR estimation
 #'
-#' y: a matrix containing the multivariate timeseries
-#' p: Integer for the lag order (default is p=1)
-#' d: Degree of differencing (default is d=0)
+#'Function to fit VAR mole of the form:
+#' \deqn{\Delta^d y_t = C+Dt+\sum_{i=1}^p A_i \Delta^d y_{t-i} + \epsilon_t}
+#' where \eqn{C} and  \eqn{D} are \eqn{K}-dimensional vectors for parameters and
+#' \eqn{A_1,...,A_p} are \eqn{K\times K} matrices of autoregressive parampeters.
+#'
+#' @param y a matrix containing the multivariate timeseries
+#' @param p integer for the lag order (default is \code{p=1})
+#' @param d degree of differencing (default is \code{d=0})
+#' @param type string indicating whether a constand a trend are included. If
+#' \code{"const"} only \eqn{C} is included. If \code{"trend"} only \eqn{D} is
+#' included.  If \code{"both"} both \eqn{C} and \eqn{D} are included.
+#'
+#' @return A list of class \code{"simpleVAR2"} with components:
+#'
+#' \item{K}{Dimension of the vector \eqn{y}. \code{K=1} if univariate}
+#' \item{A}{A 3-dimensional array with the vector autregressive matrices, \eqn{A_1,...,A_p}.}
+#' \item{C}{Vector of constant parameters.}
+#' \item{D}{Vector of trend parametesr.}
+#' \item{p}{Integer indicating the lag order.}
+#' \item{d}{Degree of differencing.}
+#' \item{n}{number of time periods used in the fitting.}
+#' \item{Sigma}{Variance-covariance matrix.}
+#' \item{resid}{Residuals of the model.}
+#' \item{fittingModel}{Output of the model call underlying the fitting.}
+#' \item{y}{Data used in the fitting}
+#' \item{dy}{Difference data used in the fitting}
+#' \item{datamat}{Array including all hte lags used in fitting the model.}
+#'
 #' @export
 simpleVAR2 <- function(y,p=1,d=0, type = c("const", "trend", "both", "none")){
 
@@ -83,29 +90,6 @@ simpleVAR2 <- function(y,p=1,d=0, type = c("const", "trend", "both", "none")){
       }
       Sigma <- array(var(resid(fittingModel)), dim = c(1,1))
 
-      # include.constant<- (type == "const")  | (type == "both")
-      # include.drift<- (type == "trend")  | (type == "both")
-      # fittingModel <- Arima(dy[,1], order = c(p, 0, 0),
-      #                       include.drift = include.drift,
-      #                       include.constant = include.constant, method = "CSS")
-      # A <- NULL
-      # if (p > 0){
-      #   for(i in 1:p){
-      #     A[[i]] <- array(fittingModel$coef[i], dim = c(1,1))
-      #   }
-      # }
-      # if(type %in% c("const", "both")){
-      #   C<-fittingModel$coef["intercept"]        #Intercept
-      # }else{
-      #   C<-rep(0,K)
-      # }
-      # if(type %in% c("both", "trend")){
-      #   D<-fittingModel$coef["drift"]         #trend
-      # }else{
-      #   D<-rep(0,K)
-      # }
-      # Sigma <- array(var(resid(fittingModel)), dim = c(1,1))
-
     } else {
       fittingModel <- VAR(dy,p=p,type=type)
       #prepare the output
@@ -147,28 +131,19 @@ simpleVAR2 <- function(y,p=1,d=0, type = c("const", "trend", "both", "none")){
 }
 
 
-#------------------------------------------------------------------------------------------
-#                                 FORECAST
-#------------------------------------------------------------------------------------------
-#' Forecast a VAR from class simpleVAR
+#' Forecast a VAR from class simpleVAR2
 #'
+#' Function for obtaininng forcast of a VAR model
 #'
-#'  ARGUMENT
+#' @param object An object of class \code{"simpleVAR2."}.
+#' @param h Number of periods for the forecasted series
+#' @param colnames Name of the columns (time periods)
 #'
-#' object: An object of class "ets", "Arima" or "ar".
-#' n.ahead: Number of periods for the simulated series
-#' colnames: Name of the columns (time periods)
+#' @return A matrix with the forecast series
+#'
 #' @export
 forecast.simpleVAR2 <- function(object, h = 10, colnames=NULL){
   n.ahead <- h
-  # Forecast a VAR from class simpleVAR
-  #
-  #
-  #  ARGUMENT
-  #
-  # object: An object of class "ets", "Arima" or "ar".
-  # n.ahead: Number of periods for the simulated series
-  # colnames: Name of the columns (time periods)
 
   A <- object$A
   C <- object$C
@@ -211,33 +186,33 @@ forecast.simpleVAR2 <- function(object, h = 10, colnames=NULL){
   yt_for
 }
 
-#------------------------------------------------------------------------------------------
-#                                 SIMULATE
-#------------------------------------------------------------------------------------------
 
-#' Simulate n.path of VAR from class simpleVAR
+#' Simulate a VAR model
 #'
+#' Returns one simulated path of the VAR model in \code{object}.
 #'
-#'  ARGUMENT
-#'
-#' object: An object of class "ets", "Arima" or "ar".
-#' n.ahead: Number of periods for the simulated series
-#' n.path: Number of paths to be simulated
-#' colnames: Name of the columns (time periods)
+#' @param object: An object of class \code{"simpleVAR2"}.
+#' @param nsim number of periods for the simulated series.
+#' @param seed either \code{NULL} or an integer that will be used in a
+#' call to \code{\link{set.seed}} before simulating the time series.
+#' The default, \code{NULL} will not change the random generator state.
+#' @param colnames Name of the columns (time periods)
 #' @export
 simulate.simpleVAR2 <- function(object, nsim = 10, seed = NULL, colnames=NULL){
+
+  if (!exists(".Random.seed", envir = .GlobalEnv))
+    runif(1)
+  if (is.null(seed))
+    RNGstate <- .Random.seed
+  else {
+    R.seed <- .Random.seed
+    set.seed(seed)
+    RNGstate <- structure(seed, kind = as.list(RNGkind()))
+    on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
+  }
+
   n.path <- 1
   n.ahead <- nsim
-  # Simulate n.path of VAR from class simpleVAR
-  #
-  #
-  #  ARGUMENT
-  #
-  # object: An object of class "ets", "Arima" or "ar".
-  # n.ahead: Number of periods for the simulated series
-  # n.path: Number of paths to be simulated
-  # colnames: Name of the columns (time periods)
-
   A <- object$A
   C <- object$C
   D <- object$D
@@ -245,43 +220,41 @@ simulate.simpleVAR2 <- function(object, nsim = 10, seed = NULL, colnames=NULL){
   K <- object$K
   d <- object$d
   n <- object$n
-  onePathSim<-function(k){
-    #generate innovations
-    u <- mvrnorm(n=n.ahead,mu=rep(0,object$K),Sigma=object$Sigma)
 
-    #generate the differenced series
-    dyt_sim <- array(0,dim=dim(u))
-    dy_t <-  tail(object$dy,object$p)
-    for (t in 1:n.ahead){
-      dyt_sim[t,] <- C + D*(n+t) + u[t,]
-      i <- 1
-      while(i<=p){
-        dyt_sim[t,] <- dyt_sim[t,] + t(A[[i]]%*%array(dy_t[p+1-i,],dim=c(K,1)))
-        i<-i+1
-      }
-      i <- 1
-      while(i<p){
-        dy_t[i,] <- dy_t[i+1,]
-        i<-i+1
-      }
-      dy_t[p,]<-dyt_sim[t,]
+  #generate innovations
+  u <- mvrnorm(n = n.ahead, mu = rep(0, object$K), Sigma=object$Sigma)
 
+  #generate the differenced series
+  dyt_sim <- array(0,dim=dim(u))
+  dy_t <-  tail(object$dy,object$p)
+  for (t in 1:n.ahead){
+    dyt_sim[t,] <- C + D*(n+t) + u[t,]
+    i <- 1
+    while(i<=p){
+      dyt_sim[t,] <- dyt_sim[t,] + t(A[[i]]%*%array(dy_t[p+1-i,],dim=c(K,1)))
+      i<-i+1
     }
-    #undifference the data
-    j <- d
-    yt_sim<-dyt_sim
-    while(j>0){
-        yt_t_1 <- tail(object$datamat[[j]],1)
-        for(t in 1:n.ahead){
-          yt_sim[t,] <- yt_sim[t,] + yt_t_1
-          yt_t_1 <- yt_sim[t,]
-        }
-        j<-j-1
+    i <- 1
+    while(i<p){
+      dy_t[i,] <- dy_t[i+1,]
+      i<-i+1
     }
-    dimnames(yt_sim) <- list(colnames)
-    yt_sim
+    dy_t[p,]<-dyt_sim[t,]
+
   }
-  #run for all the simulations
-  onePathSim()
+
+  #undifference the data
+  j <- d
+  yt_sim<-dyt_sim
+  while(j>0){
+      yt_t_1 <- tail(object$datamat[[j]],1)
+      for(t in 1:n.ahead){
+        yt_sim[t,] <- yt_sim[t,] + yt_t_1
+        yt_t_1 <- yt_sim[t,]
+      }
+      j<-j-1
+  }
+  dimnames(yt_sim) <- list(colnames)
+  yt_sim
 
 }
